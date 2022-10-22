@@ -28,8 +28,8 @@ const welcomeTagTxt2 = "are you hungry enough to win?</br>Click Sandwich to scar
 const mainGameHeaderTxt = "Battle Sandwich - Prepare to Eat"
 
 //board size selections
-let numberOfRows = 5,
-    numberOfColumns = 5;
+let numberOfRows = 10,
+    numberOfColumns = 10;
 
 //game play info
 let playerHits,
@@ -39,7 +39,7 @@ let playerHits,
 
 /*-----Cached Elements------*/
 body = document.querySelector('body')
-console.log(body)
+    // console.log(body)
 deliCounter = document.getElementById('deli-counter')
 computerBoard = document.getElementById('computer')
 playerBoard = document.getElementById('player')
@@ -61,45 +61,60 @@ function createGameBoards() {
             let square = document.createElement('div')
             square.setAttribute('class', 'player-square')
             square.setAttribute('id', 'p' + (i) + '-' + (k))
-            square.style.border = ('solid 1px black')
+            square.innerText = i.toString() + k.toString()
+            square.style.border = ('solid 2px black')
             square.style.backgroundColor = ('teal')
             square.style.gridColumnStart = i + 1
             square.style.gridColumnEnd = i + 2
             square.style.gridRowStart = k + 1
-            square.style.gridRowEnd = k = 2
-                // playerBoard.appendChild(square)
-                // console.log(square)
+                // square.style.gridRowEnd = k = 2
+            playerBoard.appendChild(square)
+
+
         }
     }
     for (let i = 0; i < numberOfRows; i++) {
         for (let k = 0; k < numberOfRows; k++) {
-            playerBoard[i].push(-1)
+            playerArray[i].push(-1)
         }
     }
+
     computerArray = new Array()
     for (let i = 0; i < numberOfRows; i++) {
         computerArray[i] = new Array()
         for (let k = 0; k < numberOfColumns; k++) {
             let square = document.createElement('div')
+            square.setAttribute('class', 'computer-square')
             square.setAttribute('id', 'c' + (i) + '-' + (k))
+            square.innerText = i.toString() + k.toString()
             square.style.border = ('solid 1px black')
             square.style.backgroundColor = ('orange')
-                // computerBoard.appendChild(square)
+
+            square.style.gridColumnStart = i + 1
+            square.style.gridColumnEnd = i + 2
+            square.style.gridRowStart = k + 1
+
+            computerBoard.appendChild(square)
                 // console.log(square)
         }
     }
     for (let i = 0; i < numberOfRows; i++) {
         for (let k = 0; k < numberOfRows; k++) {
-            computerBoard[i].push(-1)
+            computerArray[i].push(-1)
         }
     }
-
 }
 
 
 
-
-
+// square.style.border = ('solid 1px black')
+//             square.style.backgroundColor = ('teal')
+// square.style.gridColumnStart = i + 1
+// square.style.gridColumnEnd = i + 2
+// square.style.gridRowStart = k + 1
+// square.style.gridRowEnd = k = 2
+// playerBoard.appendChild(square)
+// console.log(square)
 
 function goToDeliBoard() {
     body.removeChild(deliCounter)
@@ -112,7 +127,7 @@ function goToDeliBoard() {
     welcomeImg1.style.visibility = 'hidden'
     mainGameArea.style.visibility = 'visible'
     deliCounter.style.visibility = 'hidden'
-        // createGameBoards()
+    createGameBoards()
         // compute
 }
 
