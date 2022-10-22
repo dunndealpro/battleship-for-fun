@@ -105,16 +105,47 @@ function createGameBoards() {
     }
 }
 
+function compSandwichPlacement(sandwich) {
+    startingSquare = Math.floor(Math.random() * (numberOfColumns * numberOfRows))
+    console.log(startingSquare)
+        //0=north, 1=east, 2=south, 3=west
+    directionOfSandwich = Math.floor(Math.random() * 3)
+    console.log('direction = ' + directionOfSandwich)
+
+    if (startingSquare.length === 1) {
+        column = 0, row = startingSquare
+    } else {
+        startingSquare = startingSquare.toString()
+        column = startingSquare.charAt(0)
+        row = startingSquare.charAt(1)
+        console.log(column)
+        console.log(row)
+    }
+
+    test = document.getElementById('c' + column + '-' + row)
+    console.log(test)
+    test.style.backgroundColor = 'red'
 
 
-// square.style.border = ('solid 1px black')
-//             square.style.backgroundColor = ('teal')
-// square.style.gridColumnStart = i + 1
-// square.style.gridColumnEnd = i + 2
-// square.style.gridRowStart = k + 1
-// square.style.gridRowEnd = k = 2
-// playerBoard.appendChild(square)
-// console.log(square)
+    console.log(sandwich)
+    for (let i = 0; i < sandwich; i++) {
+        if (directionOfSandwich === 0) {
+            square = document.getElementById('c' + column + '-' + (row - (i + 1)))
+            square.style.backgroundColor = 'red'
+        } else if (directionOfSandwich === 1) {
+            square = document.getElementById('c' + (column + (i + 1)) + '-' + row)
+            square.style.backgroundColor = 'red'
+        } else if (directionOfSandwich === 2) {
+            square = document.getElementById('c' + (column) + '-' + (row + (i + 1)))
+            square.style.backgroundColor = 'red'
+        } else if (directionOfSandwich === 3) {
+            square = document.getElementById('c' + (column - (i + 1)) + '-' + (row))
+            square.style.backgroundColor = 'red'
+        }
+    }
+}
+
+// compSandwichPlacement()
 
 function goToDeliBoard() {
     body.removeChild(deliCounter)
@@ -128,6 +159,7 @@ function goToDeliBoard() {
     mainGameArea.style.visibility = 'visible'
     deliCounter.style.visibility = 'hidden'
     createGameBoards()
+    compSandwichPlacement(meatballSub)
         // compute
 }
 
