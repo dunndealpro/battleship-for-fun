@@ -131,24 +131,47 @@ function compSandwichPlacement(sandwich) {
     console.log(row)
 
     column = parseInt(column), row = parseInt(row)
+
+    console.log(column)
+    console.log(row)
         // console.log(sandwich)
     for (let i = 1; i < sandwich; i++) {
         if (directionOfSandwich == 0) {
-            square = document.getElementById('c' + (column) + '-' + (row - i))
-            console.log(square)
-            square.style.backgroundColor = 'red'
+            if ((row - sandwich) >= 0) {
+                square = document.getElementById('c' + (column) + '-' + (row - i))
+                console.log(square)
+                square.style.backgroundColor = 'red'
+            } else {
+                console.log('nope')
+                break
+            }
         } else if (directionOfSandwich == 1) {
-            square = document.getElementById('c' + (column) + i + '-' + (row))
-            console.log(square)
-            square.style.backgroundColor = 'red'
+            if ((column + sandwich) <= 9) {
+                square = document.getElementById('c' + (column + i) + '-' + (row))
+                console.log(square)
+                square.style.backgroundColor = 'red'
+            } else {
+                console.log('nope')
+                break
+            }
         } else if (directionOfSandwich == 2) {
-            square = document.getElementById('c' + (column) + '-' + (row + i))
-            console.log(square)
-            square.style.backgroundColor = 'red'
+            if ((row + sandwich) <= 9) {
+                square = document.getElementById('c' + (column) + '-' + (row + i))
+                console.log(square)
+                square.style.backgroundColor = 'red'
+            } else {
+                console.log('nope')
+                break
+            }
         } else if (directionOfSandwich == 3) {
-            square = document.getElementById('c' + (column - i) + '-' + (row))
-            console.log(square)
-            square.style.backgroundColor = 'red'
+            if ((column - sandwich) >= 0) {
+                square = document.getElementById('c' + (column - i) + '-' + (row))
+                console.log(square)
+                square.style.backgroundColor = 'red'
+            } else {
+                console.log('nope')
+                break
+            }
         }
     }
 }
