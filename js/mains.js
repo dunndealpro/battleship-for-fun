@@ -60,7 +60,7 @@ function createGameBoards() {
         for (let k = 0; k < numberOfColumns; k++) {
             let square = document.createElement('div')
             square.setAttribute('class', 'player-square')
-            square.setAttribute('id', 'p' + (i) + '-' + (k))
+            square.setAttribute('id', 'p' + (i + 1) + '-' + (k + 1))
             square.innerText = i.toString() + k.toString()
             square.style.border = ('solid 2px black')
             square.style.backgroundColor = ('teal')
@@ -86,6 +86,7 @@ function createGameBoards() {
             let square = document.createElement('div')
             square.setAttribute('class', 'computer-square')
             square.setAttribute('id', 'c' + (i) + '-' + (k))
+                // c = i + 1, r = k + 1
             square.innerText = i.toString() + k.toString()
             square.style.border = ('solid 1px black')
             square.style.backgroundColor = ('orange')
@@ -111,7 +112,7 @@ function compSandwichPlacement(sandwich) {
         //0=north, 1=east, 2=south, 3=west
     directionOfSandwich = Math.floor(Math.random() * 3)
     console.log('direction = ' + directionOfSandwich)
-
+    startingSquare = startingSquare.toString()
     if (startingSquare.length === 1) {
         column = 0, row = startingSquare
     } else {
@@ -126,20 +127,27 @@ function compSandwichPlacement(sandwich) {
     console.log(test)
     test.style.backgroundColor = 'red'
 
+    console.log(column)
+    console.log(row)
 
-    console.log(sandwich)
-    for (let i = 0; i < sandwich; i++) {
-        if (directionOfSandwich === 0) {
-            square = document.getElementById('c' + column + '-' + (row - (i + 1)))
+    column = parseInt(column), row = parseInt(row)
+        // console.log(sandwich)
+    for (let i = 1; i < sandwich; i++) {
+        if (directionOfSandwich == 0) {
+            square = document.getElementById('c' + (column) + '-' + (row - i))
+            console.log(square)
             square.style.backgroundColor = 'red'
-        } else if (directionOfSandwich === 1) {
-            square = document.getElementById('c' + (column + (i + 1)) + '-' + row)
+        } else if (directionOfSandwich == 1) {
+            square = document.getElementById('c' + (column) + i + '-' + (row))
+            console.log(square)
             square.style.backgroundColor = 'red'
-        } else if (directionOfSandwich === 2) {
-            square = document.getElementById('c' + (column) + '-' + (row + (i + 1)))
+        } else if (directionOfSandwich == 2) {
+            square = document.getElementById('c' + (column) + '-' + (row + i))
+            console.log(square)
             square.style.backgroundColor = 'red'
-        } else if (directionOfSandwich === 3) {
-            square = document.getElementById('c' + (column - (i + 1)) + '-' + (row))
+        } else if (directionOfSandwich == 3) {
+            square = document.getElementById('c' + (column - i) + '-' + (row))
+            console.log(square)
             square.style.backgroundColor = 'red'
         }
     }
