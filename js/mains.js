@@ -71,8 +71,6 @@ function createGameBoards() {
             square.style.gridRowStart = k + 1
                 // square.style.gridRowEnd = k = 2
             playerBoard.appendChild(square)
-
-
         }
     }
     for (let i = 0; i < numberOfRows; i++) {
@@ -122,8 +120,7 @@ function getStartingSquare() {
         startingSquare = startingSquare.toString()
         column = startingSquare.charAt(0)
         row = startingSquare.charAt(1)
-        console.log(column)
-        console.log(row)
+
     }
 
     column = parseInt(column), row = parseInt(row)
@@ -138,70 +135,86 @@ function getStartingSquare() {
         console.log('restart function Starting Square')
         getStartingSquare()
     }
+    console.log('starting square')
+    console.log(column)
+    console.log(row)
 }
-
 
 function compSandwichPlacement(sandwich) {
     compPlacementArray = computerArray
     getStartingSquare()
 
-    console.log(column)
-    console.log(row)
-
     firstSqaure = document.getElementById('c' + column + '-' + row)
-    console.log('c' + column + '-' + row)
-    console.log(firstSqaure)
     firstSqaure.style.backgroundColor = 'red'
+    console.log('Array: ' + compPlacementArray[row][column])
+    compPlacementArray[row][column] = 1
 
-    console.log(column)
-    console.log(row)
 
+    // console.log(sandwich)
 
-    console.log(column)
-    console.log(row)
-    console.log(numberOfRows)
-    console.log(numberOfColumns)
-        // console.log(sandwich)
+    // places sandwich on tiles
     for (let i = 1; i < sandwich; i++) {
         if (directionOfSandwich == 0 || directionOfSandwich == 4) {
             if ((row + 1 - sandwich) <= 0) {
+                // console.log('reverse direction')
                 square = document.getElementById('c' + (column) + '-' + (row + i))
                 square.style.backgroundColor = 'red'
+                console.log('Array: ' + compPlacementArray[row + i][column])
+                compPlacementArray[row + i][column] = 1
             } else {
                 square = document.getElementById('c' + (column) + '-' + (row - i))
                 square.style.backgroundColor = 'red'
+                console.log('Array: ' + compPlacementArray[row - i][column])
+                compPlacementArray[row - i][column] = 1
             }
 
         } else if (directionOfSandwich == 1 || directionOfSandwich == 5) {
             if ((column - 1 + sandwich) >= (numberOfColumns - 1)) {
+                // console.log('reverse direction')
                 square = document.getElementById('c' + (column - i) + '-' + (row))
                 square.style.backgroundColor = 'red'
+                console.log('Array: ' + compPlacementArray[row][column - i])
+                compPlacementArray[row][column - i] = 1
             } else {
                 square = document.getElementById('c' + (column + i) + '-' + (row))
                 square.style.backgroundColor = 'red'
+                console.log('Array: ' + compPlacementArray[row][column - i])
+                compPlacementArray[row][column - i] = 1
 
             }
         } else if (directionOfSandwich == 2 || directionOfSandwich == 6) {
-            if ((row + 1 + sandwich) >= (numberOfRows - 1)) {
+            if ((row + sandwich) >= (numberOfRows - 1)) {
+                // console.log('reverse direction')
                 square = document.getElementById('c' + (column) + '-' + (row - i))
+                console.log(square)
                 square.style.backgroundColor = 'red'
+                console.log('Array: ' + compPlacementArray[row - i][column])
+                compPlacementArray[row - i][column] = 1
             } else {
                 square = document.getElementById('c' + (column) + '-' + (row + i))
                 square.style.backgroundColor = 'red'
-
+                console.log('Array: ' + compPlacementArray[row + i][column])
+                compPlacementArray[row + i][column] = 1
             }
         } else if (directionOfSandwich == 3 || directionOfSandwich == 7) {
             if ((column + 1 - sandwich) <= 0) {
+                // console.log('reverse direction')
                 square = document.getElementById('c' + (column + i) + '-' + (row))
                 square.style.backgroundColor = 'red'
+                console.log('Array: ' + compPlacementArray[row][column + i])
+                compPlacementArray[row][column + i] = 1
             } else {
                 square = document.getElementById('c' + (column - i) + '-' + (row))
                 square.style.backgroundColor = 'red'
+                console.log('Array: ' + compPlacementArray[row][column - i])
+                compPlacementArray[row][column - i] = 1
             }
         }
     }
     console.log(compPlacementArray)
 }
+
+
 
 // compSandwichPlacement()
 
@@ -217,7 +230,7 @@ function goToDeliBoard() {
     mainGameArea.style.visibility = 'visible'
     deliCounter.style.visibility = 'hidden'
     createGameBoards()
-    compSandwichPlacement(meatballSub)
+    compSandwichPlacement(phillyCheese)
         // compute
 }
 
@@ -235,3 +248,64 @@ init()
 
 /*------EventListenrs------- */
 welcomeImg1.addEventListener('click', goToDeliBoard)
+
+
+
+// for (let i = 1; i < sandwich; i++) {
+//     if (directionOfSandwich == 0 || directionOfSandwich == 4) {
+//         if ((row + 1 - sandwich) <= 0) {
+//             // console.log('reverse direction')
+//             square = document.getElementById('c' + (column) + '-' + (row + i))
+//             square.style.backgroundColor = 'red'
+//             console.log('Array: ' + compPlacementArray[row][column])
+//             compPlacementArray[row][column] = 1
+//         } else {
+//             square = document.getElementById('c' + (column) + '-' + (row - i))
+//             square.style.backgroundColor = 'red'
+//             console.log('Array: ' + compPlacementArray[row][column])
+//             compPlacementArray[row][column] = 1
+//         }
+
+//     } else if (directionOfSandwich == 1 || directionOfSandwich == 5) {
+//         if ((column - 1 + sandwich) >= (numberOfColumns - 1)) {
+//             // console.log('reverse direction')
+//             square = document.getElementById('c' + (column - i) + '-' + (row))
+//             square.style.backgroundColor = 'red'
+//             console.log('Array: ' + compPlacementArray[row][column])
+//             compPlacementArray[row][column] = 1
+//         } else {
+//             square = document.getElementById('c' + (column + i) + '-' + (row))
+//             square.style.backgroundColor = 'red'
+//             console.log('Array: ' + compPlacementArray[row][column])
+//             compPlacementArray[row][column] = 1
+
+//         }
+//     } else if (directionOfSandwich == 2 || directionOfSandwich == 6) {
+//         if ((row + sandwich) >= (numberOfRows - 1)) {
+//             // console.log('reverse direction')
+//             square = document.getElementById('c' + (column) + '-' + (row - i))
+//             console.log(square)
+//             square.style.backgroundColor = 'red'
+//             console.log('Array: ' + compPlacementArray[row][column])
+//             compPlacementArray[row][column] = 1
+//         } else {
+//             square = document.getElementById('c' + (column) + '-' + (row + i))
+//             square.style.backgroundColor = 'red'
+//             console.log('Array: ' + compPlacementArray[row][column])
+//             compPlacementArray[row][column] = 1
+//         }
+//     } else if (directionOfSandwich == 3 || directionOfSandwich == 7) {
+//         if ((column + 1 - sandwich) <= 0) {
+//             // console.log('reverse direction')
+//             square = document.getElementById('c' + (column + i) + '-' + (row))
+//             square.style.backgroundColor = 'red'
+//             console.log('Array: ' + compPlacementArray[row][column])
+//             compPlacementArray[row][column] = 1
+//         } else {
+//             square = document.getElementById('c' + (column - i) + '-' + (row))
+//             square.style.backgroundColor = 'red'
+//             console.log('Array: ' + compPlacementArray[row][column])
+//             compPlacementArray[row][column] = 1
+//         }
+//     }
+// }
