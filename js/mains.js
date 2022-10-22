@@ -29,6 +29,8 @@ italianHoagieImg1.src = "images/subsandwich.png"
 const phillyCheeseImg = new Image(200, 50)
 phillyCheeseImg.src = "images/phillycheese.png"
 
+sandwichImgArray = [hamBurgerImg, hotDogImg, meatBallSubImg, italianHoagieImg1, phillyCheeseImg]
+
 //sounds
 // const eatSound,
 //     missSound;
@@ -55,7 +57,8 @@ let playerHits,
     computerEats,
     diffLevel,
     column,
-    row;
+    row,
+    firstSqaure;
 
 
 
@@ -74,6 +77,7 @@ justASnack = document.getElementById('easy')
 iCouldEat = document.getElementById('medium')
 famished = document.getElementById('hard')
 gameInfoDisp = document.getElementById('game-info')
+orderSandwiches = document.getElementById('place-sandwiches')
 
 
 
@@ -85,28 +89,20 @@ function createGameBoards(event) {
         numberOfRows = 6
         numberOfColumns = 6
         diffLevel = 3
+        updateSandwichImg()
     } else if (event.target.id === 'medium') {
         numberOfRows = 8
         numberOfColumns = 8
         diffLevel = 4
-    } else if (event.target === ' hard') {
+        updateSandwichImg()
+    } else if (event.target.id === 'hard') {
         numberOfRows = 10
         numberOfColumns = 10
         diffLevel = 5
+        updateSandwichImg()
     }
 
     mainGameArea.removeChild(difficultyWindow)
-    hamBurgerDiv = document.createElement('div')
-    hamBurgerDiv.innerHTML = hamBurgerImg
-    gameInfoDisp.appendChild(hamBurgerImg)
-    hotDogDiv = document.createElement('div')
-    hotDogDiv.innerHTML = hotDogImg
-    gameInfoDisp.appendChild(hotDogImg)
-    meatBallDiv = document.createElement('div')
-    gameInfoDisp.appendChild(meatBallSubImg)
-
-    gameInfoDisp.appendChild(italianHoagieImg1)
-    gameInfoDisp.appendChild(phillyCheeseImg)
 
 
 
@@ -117,8 +113,12 @@ function createGameBoards(event) {
             let square = document.createElement('div')
             square.setAttribute('class', 'player-square')
             square.setAttribute('id', 'p' + (i + 1) + '-' + (k + 1))
-            square.innerText = i.toString() + k.toString()
-            square.style.border = ('solid 2px black')
+                // square.innerText = i.toString() + k.toString()
+            square.style.border = ('solid 2px white')
+            square.style.width = ((600 / numberOfColumns) + 'px')
+            square.style.height = ((600 / numberOfRows) + 'px')
+                // square.style.width = '100px'
+                // square.style.height = '100px'
             square.style.backgroundColor = ('teal')
             square.style.gridColumnStart = i + 1
             square.style.gridColumnEnd = i + 2
@@ -160,6 +160,14 @@ function createGameBoards(event) {
     }
 }
 
+function updateSandwichImg() {
+    for (let i = 0; i < diffLevel; i++) {
+        gameInfoDisp.appendChild(sandwichImgArray[i])
+        console.log('getting hungry')
+    }
+}
+
+
 function getStartingSquare() {
     startingSquare = Math.floor(Math.random() * (numberOfColumns * numberOfRows))
     console.log(startingSquare)
@@ -177,15 +185,15 @@ function getStartingSquare() {
 
     }
 
-    column = parseInt(column), row = parseInt(row)
+    // column = parseInt(column), row = parseInt(row)
     console.log('First column value: ' + column)
     console.log('First row value: ' + row)
 
-    if (row >= numberOfRows) {
+    if (row > numberOfRows) {
         console.log('restart function Starting Square')
         getStartingSquare()
     }
-    if (column >= numberOfRows) {
+    if (column > numberOfColumns) {
         console.log('restart function Starting Square')
         getStartingSquare()
     }
@@ -193,7 +201,7 @@ function getStartingSquare() {
     console.log(column)
     console.log(row)
 
-    if (computerArray[row][column] === 1) {
+    if (computerArray[row][column] === 1 || playerArray[row][column] === 1) {
         getStartingSquare()
     }
 }
@@ -275,8 +283,9 @@ function compSandwichPlacement(sandwich) {
 function playerSandwichPlacement(sandwich) {
     // compPlacementArray = computerArray
     getStartingSquare()
-
+        // column = parseInt(column), row = parseInt(row)
     firstSqaure = document.getElementById('p' + column + '-' + row)
+    console.log(firstSqaure)
     firstSqaure.style.backgroundColor = 'red'
     console.log('Array: ' + playerArray[row][column])
     playerArray[row][column] = 1
@@ -344,10 +353,20 @@ function playerSandwichPlacement(sandwich) {
         }
     }
     console.log(playerArray)
+
+    // newImg = document.createElement('div')
+    // newImg.setAttribute.style.width = '300px'
+    // newImg.setAttribute.style.height = '100px'
+    // newImg.appendChild(sandwichImgArray[2])
+    // firstSqaure.appendChild(newImg)
+
+
 }
 
-function placeSandwiches() {
-
+function playerOrder() {
+    for (let i = 0; i < diffLevel; i++) {
+        playerSandwichPlacement(sandwichesArray[i])
+    }
 }
 
 // function selectDifficulty() {
@@ -398,3 +417,4 @@ welcomeImg1.addEventListener('click', goToDeliBoard)
 justASnack.addEventListener('click', createGameBoards)
 iCouldEat.addEventListener('click', createGameBoards)
 famished.addEventListener('click', createGameBoards)
+orderSandwiches.addEventListener('click', playerOrder)
