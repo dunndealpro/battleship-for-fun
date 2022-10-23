@@ -58,7 +58,10 @@ let playerHits,
     diffLevel,
     column,
     row,
-    firstSquare;
+    directionOfSandwich,
+    aRow,
+    aCol,
+    firstSquare = [];
 
 
 
@@ -101,10 +104,7 @@ function createGameBoards(event) {
         diffLevel = 5
         updateSandwichImg()
     }
-
     mainGameArea.removeChild(difficultyWindow)
-
-
 
     playerArray = new Array()
     for (let i = 0; i < numberOfRows; i++) {
@@ -112,8 +112,8 @@ function createGameBoards(event) {
         for (let k = 0; k < numberOfColumns; k++) {
             let square = document.createElement('div')
             square.setAttribute('class', 'player-square')
-            square.setAttribute('id', 'p' + (i + 1) + '-' + (k + 1))
-            square.innerText = (i + 1).toString() + (k + 1).toString()
+            square.setAttribute('id', 'p' + (k + 1) + '-' + (i + 1))
+            square.innerText = (k + 1).toString() + (i + 1).toString()
             square.style.border = ('solid 2px black')
             square.style.width = ((600 / numberOfColumns) + 'px')
             square.style.height = ((600 / numberOfRows) + 'px')
@@ -139,9 +139,9 @@ function createGameBoards(event) {
         for (let k = 0; k < numberOfColumns; k++) {
             let square = document.createElement('div')
             square.setAttribute('class', 'computer-square')
-            square.setAttribute('id', 'c' + (i + 1) + '-' + (k + 1))
+            square.setAttribute('id', 'c' + (k + 1) + '-' + (i + 1))
                 // c = i + 1, r = k + 1
-            square.innerText = (i + 1).toString() + (k + 1).toString()
+            square.innerText = (k + 1).toString() + (i + 1).toString()
             square.style.border = ('solid 2px black')
             square.style.backgroundColor = ('orange')
             square.style.width = ((600 / numberOfColumns) + 'px')
@@ -160,12 +160,7 @@ function createGameBoards(event) {
             computerArray[i].push(-1)
         }
     }
-    // playerSandwichPlacement(phillyCheese)
-    // playerSandwichPlacement(italianHoagie)
-    // playerSandwichPlacement(meatballSub)
-    // playerSandwichPlacement(hotDog)
-    // playerSandwichPlacement(hamBurgerImg)
-    // playerSandwichPlacement(phillyCheese)
+
 }
 
 function updateSandwichImg() {
@@ -175,221 +170,137 @@ function updateSandwichImg() {
     }
 }
 
-
-function getStartingSquare() {
-    // startingSquare = Math.floor(Math.random() * (numberOfColumns * numberOfRows))
-    startingRow = 1 + Math.floor(Math.random() * (numberOfRows - 1 + 1))
-    startingColumn = 1 + Math.floor(Math.random() * (numberOfColumns - 1 + 1))
-        // startingSquare = [startingColumn, startingRow]
-        // console.log(startingSquare)
-        //0=north, 1=east, 2=south, 3=west
-
-    directionOfSandwich = Math.floor(Math.random() * 7)
-    console.log('direction = ' + directionOfSandwich)
-        // startingSquare = startingSquare.toString()
-        // if (startingSquare.length === 1) {
-        //     column = 1, row = startingSquare
-        // } else {
-        //     startingSquare = startingSquare.toString()
-        //     column = startingSquare.charAt(0)
-        //     row = startingSquare.charAt(1)
-
-    // }
-    column = startingColumn
-    row = startingRow
-    firstSquare = column + row
-        // column = parseInt(column), row = parseInt(row)
-    console.log('First column value: ' + column)
-    console.log('First row value: ' + row)
-
-    if (row > numberOfRows + 1) {
-        console.log('restart function Starting Square')
-        getStartingSquare()
-    }
-    if (column > numberOfColumns + 1) {
-        console.log('restart function Starting Square')
-        getStartingSquare()
-    }
-    console.log('starting square')
-    console.log(column)
-    console.log(row)
-    console.log(playerArray)
-    if (computerArray[row - 1][column - 1] === 1 || playerArray[row - 1][column - 1] === 1) {
-        getStartingSquare()
-    }
-}
-
-function compSandwichPlacement(sandwich) {
-    // compPlacementArray = computerArray
-    getStartingSquare()
-
-    firstSquare = document.getElementById('c' + column + '-' + row)
-    firstSquare.style.backgroundColor = 'red'
-    console.log('Array: ' + computerArray[row][column])
-    computerArray[row][column] = 1
-
-
-    // console.log(sandwich)
-
-    // places sandwich on tiles
-    for (let i = 1; i < sandwich; i++) {
-        if (directionOfSandwich == 0 || directionOfSandwich == 4) {
-            if ((row + 1 - sandwich) <= 0) {
-                // console.log('reverse direction')
-                square = document.getElementById('c' + (column) + '-' + (row + i))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + computerArray[row + i][column])
-                computerArray[row + i][column] = 1
-            } else {
-                square = document.getElementById('c' + (column) + '-' + (row - i))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + computerArray[row - i][column])
-                computerArray[row - i][column] = 1
-            }
-
-        } else if (directionOfSandwich == 1 || directionOfSandwich == 5) {
-            if ((column - 1 + sandwich) >= (numberOfColumns - 1)) {
-                // console.log('reverse direction')
-                square = document.getElementById('c' + (column - i) + '-' + (row))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + computerArray[row][column - i])
-                computerArray[row][column - i] = 1
-            } else {
-                square = document.getElementById('c' + (column + i) + '-' + (row))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + computerArray[row][column - i])
-                computerArray[row][column - i] = 1
-
-            }
-        } else if (directionOfSandwich == 2 || directionOfSandwich == 6) {
-            if ((row + sandwich) >= (numberOfRows - 1)) {
-                // console.log('reverse direction')
-                square = document.getElementById('c' + (column) + '-' + (row - i))
-                console.log(square)
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + computerArray[row - i][column])
-                computerArray[row - i][column] = 1
-            } else {
-                square = document.getElementById('c' + (column) + '-' + (row + i))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + computerArray[row + i][column])
-                computerArray[row + i][column] = 1
-            }
-        } else if (directionOfSandwich == 3 || directionOfSandwich == 7) {
-            if ((column + 1 - sandwich) <= 0) {
-                // console.log('reverse direction')
-                square = document.getElementById('c' + (column + i) + '-' + (row))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + computerArray[row][column + i])
-                computerArray[row][column + i] = 1
-            } else {
-                square = document.getElementById('c' + (column - i) + '-' + (row))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + computerArray[row][column - i])
-                computerArray[row][column - i] = 1
-            }
-        }
-    }
-    console.log(computerArray)
-}
-
-function playerSandwichPlacement(sandwich) {
-    // compPlacementArray = computerArray
-    getStartingSquare()
-    firstSquare = document.getElementById('p' + column + '-' + row)
-    console.log(firstSquare)
-    firstSquare.style.backgroundColor = 'red'
-    console.log('Array: ' + playerArray[row - 1][column - 1])
-    playerArray[row - 1][column - 1] = 1
-
-
-    // console.log(sandwich)
-
-    // places sandwich on tiles
-    for (let i = 1; i < sandwich; i++) {
-
-        if (directionOfSandwich == 0 || directionOfSandwich == 4) {
-            if ((row + 1 - sandwich) <= 0) {
-                // console.log('reverse direction')
-                square = document.getElementById('p' + (column) + '-' + (row + i))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + playerArray[row + i][column])
-                playerArray[row + i][column] = 1
-            } else {
-                square = document.getElementById('p' + (column) + '-' + (row - i))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + playerArray[row - i][column])
-                playerArray[row - i][column] = 1
-            }
-
-        } else if (directionOfSandwich == 1 || directionOfSandwich == 5) {
-            if ((column - 1 + sandwich) >= (numberOfColumns - 1)) {
-                // console.log('reverse direction')
-                square = document.getElementById('p' + (column - i) + '-' + (row))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + playerArray[row][column - i])
-                playerArray[row][column - i] = 1
-            } else {
-                square = document.getElementById('p' + (column + i) + '-' + (row))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + playerArray[row][column - i])
-                playerArray[row][column - i] = 1
-
-            }
-        } else if (directionOfSandwich == 2 || directionOfSandwich == 6) {
-            if ((row + sandwich) >= (numberOfRows - 1)) {
-                // console.log('reverse direction')
-                console.log(column)
-                console.log(row)
-                square = document.getElementById('p' + (column) + '-' + (row - i))
-                console.log(square)
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + playerArray[row - i][column])
-                playerArray[row - i][column] = 1
-            } else {
-                square = document.getElementById('p' + (column) + '-' + (row + i))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + playerArray[row + i][column])
-                playerArray[row + i][column] = 1
-            }
-        } else if (directionOfSandwich == 3 || directionOfSandwich == 7) {
-            if ((column + 1 - sandwich) <= 0) {
-                // console.log('reverse direction')
-                square = document.getElementById('p' + (column + i) + '-' + (row))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + playerArray[row][column + i])
-                playerArray[row][column + i] = 1
-            } else {
-                square = document.getElementById('p' + (column - i) + '-' + (row))
-                square.style.backgroundColor = 'red'
-                console.log('Array: ' + playerArray[row][column - i])
-                playerArray[row][column - i] = 1
-            }
-        }
-    }
-    console.log(playerArray)
-
-    // newImg = document.createElement('div')
-    // newImg.setAttribute.style.width = '300px'
-    // newImg.setAttribute.style.height = '100px'
-    // newImg.appendChild(sandwichImgArray[2])
-    // firstSquare.appendChild(newImg)
-
-
-}
-
 function playerOrder() {
     for (let i = 0; i < diffLevel; i++) {
+        console.log('sandwich number: ' + sandwichesArray[i])
         playerSandwichPlacement(sandwichesArray[i])
     }
 }
 
+function getStartingSquare() {
+    row = 1 + Math.floor(Math.random() * (numberOfRows - 1 + 1))
+    column = 1 + Math.floor(Math.random() * (numberOfColumns - 1 + 1))
+        // 1: north, 2:east, 3:south: 4: west
+    directionOfSandwich = 1 + Math.floor(Math.random() * (4 - 1 + 1))
+    directionOfSandwich = parseInt(directionOfSandwich, 10)
+        // console.log('row = ' + row)
+        // console.log('column = ' + column)
+        // console.log('direction = ' + directionOfSandwich)
+    aRow = row - 1
+    aCol = column - 1
+}
 
-// function selectDifficulty() {
-//     if (difficulty = 1)
-// }
+function playerSandwichPlacement(sandwich) {
 
-// compSandwichPlacement()
+    getStartingSquare()
+        // checkFirstSquare(sandwich)
+    console.log('row = ' + row)
+    console.log('column = ' + column)
+    console.log('direction = ' + directionOfSandwich)
+
+    if (directionOfSandwich === 1) {
+        console.log('north')
+        if ((row - sandwich) > 1) {
+            for (let i = row; i > (row - sandwich); i--) {
+                square = document.getElementById('p' + i + '-' + column)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'red'
+                    // console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[i - 1][aCol] = 1
+            }
+        } else {
+            console.log('reverse direction')
+            for (let i = row; i < (sandwich + row); i++) {
+                square = document.getElementById('p' + i + '-' + column)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'red'
+                    // console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[i - 1][aCol] = 1
+            }
+        }
+    }
+
+    if (directionOfSandwich === 3) {
+        console.log('south')
+        if ((row + sandwich) < numberOfRows) {
+            for (let i = row; i < (row + sandwich); i++) {
+                square = document.getElementById('p' + i + '-' + column)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'red'
+                    // console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[i - 1][aCol] = 1
+            }
+        } else {
+            console.log('reverse direction')
+            for (let i = row; i > (row - sandwich); i--) {
+                square = document.getElementById('p' + i + '-' + column)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'red'
+                    // console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[i - 1][aCol] = 1
+            }
+        }
+    }
+
+    if (directionOfSandwich === 2) {
+        console.log('east')
+        if ((column + sandwich) < numberOfColumns) {
+            for (let i = column; i < (sandwich + column); i++) {
+                square = document.getElementById('p' + row + '-' + i)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'red'
+                    // console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[aRow][i - 1] = 1
+            }
+        } else {
+            console.log('reverse direction')
+            for (let i = column; i > (column - sandwich); i--) {
+                square = document.getElementById('p' + row + '-' + i)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'red'
+                    // console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[aRow][i - 1] = 1
+            }
+        }
+    }
+
+    if (directionOfSandwich === 4) {
+        console.log('west')
+        if ((column - sandwich) > 1) {
+            for (let i = column; i > (column - sandwich); i--) {
+                square = document.getElementById('p' + row + '-' + i)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'red'
+                    // console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[aRow][i - 1] = 1
+            }
+        } else {
+            console.log('reverse direction')
+            for (let i = column; i < (sandwich + column); i++) {
+                square = document.getElementById('p' + row + '-' + i)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'red'
+                    // console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[aRow][i - 1] = 1
+            }
+        }
+    }
+
+
+    console.log(playerArray)
+}
+
+
+
+
+
+
+
+
+
+
+
+// compSandwichPlacement(meatballSub)
 
 function goToDeliBoard() {
     body.removeChild(deliCounter)
@@ -434,3 +345,248 @@ justASnack.addEventListener('click', createGameBoards)
 iCouldEat.addEventListener('click', createGameBoards)
 famished.addEventListener('click', createGameBoards)
 orderSandwiches.addEventListener('click', playerOrder)
+
+/*------scrap pad ------*/
+
+// function checkFirstSquare(sandwich) {
+//     let aRow = parseInt(row - 1)
+//     let aColumn = parseInt(column - 1)
+
+//     if (directionOfSandwich === 1) {
+//         console.log('array check ' + playerArray[1][1])
+//         for (let i = 0; i < sandwich; i++) {
+//             // console.log(playerArray[aRow + i][aColumn])
+//             if (playerArray[aRow + i][aColumn] === 1) {
+//                 console.log('spot taken')
+//                 getStartingSquare()
+//                     // break
+//             }
+//         }
+//     } else if (directionOfSandwich === 2) {
+//         console.log('array check ' + playerArray[1][1])
+//         for (let i = 0; i < sandwich; i++) {
+//             // console.log(playerArray[aRow + i][aColumn])
+//             if (playerArray[aRow][aColumn + i] === 1) {
+//                 console.log('spot taken')
+//                 getStartingSquare()
+//                     // break
+//             }
+//         }
+//     } else if (directionOfSandwich === 3) {
+//         console.log('array check ' + playerArray[1][1])
+//         for (let i = 0; i < sandwich; i++) {
+//             // console.log(playerArray[aRow + i][aColumn])
+//             if (playerArray[aRow - i][aColumn] === 1) {
+//                 console.log('spot taken')
+//                 getStartingSquare()
+//                     // break
+//             }
+//         }
+//     } else if (directionOfSandwich === 4) {
+//         console.log('array check ' + playerArray[1][1])
+//         for (let i = 0; i < sandwich; i++) {
+//             // console.log(playerArray[aRow + i][aColumn])
+//             if (playerArray[aRow][aColumn - i] === 1) {
+//                 console.log('spot taken')
+//                 getStartingSquare()
+//                     // break
+//             }
+//         }
+//     }
+
+// }
+
+// function playerSandwichPlacement(sandwich) {
+
+//     getStartingSquare()
+//     checkFirstSquare(sandwich)
+
+//     // firstSquare = document.getElementById('p' + column + '-' + row)
+//     // console.log(firstSquare)
+//     // firstSquare.style.backgroundColor = 'red'
+//     // console.log('Array: ' + playerArray[row - 1][column - 1])
+//     // playerArray[row - 1][column - 1] = 1
+
+
+//     console.log('sandwich ' + sandwich)
+
+//     // places sandwich on tiles
+
+
+//     if (directionOfSandwich === 1) {
+//         if ((row - sandwich) < 1) {
+//             console.log('reverse direction')
+//             for (let i = 0; i < sandwich; i++) {
+//                 square = document.getElementById('p' + (column) + '-' + (row + i))
+//                 square.innerText = sandwich
+//                 square.style.backgroundColor = 'red'
+//                     // console.log('Array: ' + playerArray[row + i][column])
+//                 playerArray[(row - 1) + i][column - 1] = 1
+//             }
+//         } else {
+//             for (let i = 0; i < sandwich; i++) {
+//                 square = document.getElementById('p' + (column) + '-' + (row - i))
+//                 square.innerText = sandwich
+//                 square.style.backgroundColor = 'red'
+//                     // console.log('Array: ' + playerArray[row - i][column])
+//                 playerArray[(row - 1) - i][column - 1] = 1
+//             }
+//         }
+
+//     }
+//     console.log(playerArray)
+
+//     if (directionOfSandwich === 2) {
+//         if ((column + sandwich) > (numberOfColumns)) {
+//             console.log('reverse direction')
+//             for (let i = 0; i < sandwich; i++) {
+//                 square = document.getElementById('p' + (column - i) + '-' + (row))
+//                 square.innerText = sandwich
+//                 square.style.backgroundColor = 'red'
+//                     // console.log('Array: ' + playerArray[row][column - i])
+//                 playerArray[row - 1][(column - 1) - i] = 1
+//             }
+//         } else {
+//             for (let i = 0; i < sandwich; i++) {
+//                 square = document.getElementById('p' + (column + i) + '-' + (row))
+//                 square.innerText = sandwich
+//                 square.style.backgroundColor = 'red'
+//                     // console.log('Array: ' + playerArray[row][column +i +1])
+//                 playerArray[row - 1][(column - 1) + i] = 1
+//             }
+//         }
+//     }
+//     console.log(playerArray)
+
+//     if (directionOfSandwich === 3) {
+//         if ((row + sandwich) > (numberOfRows)) {
+//             console.log('reverse direction')
+//             for (let i = 0; i < sandwich; i++) {
+//                 square = document.getElementById('p' + (column) + '-' + (row - i))
+//                 square.innerText = sandwich
+//                 console.log(square)
+//                 square.style.backgroundColor = 'red'
+//                 console.log('Array: ' + playerArray[row - 1 - i][column - 1])
+//                 playerArray[(row - 1) - i][column - 1] = 1
+//             }
+//         } else {
+//             for (let i = 0; i < sandwich; i++) {
+//                 square = document.getElementById('p' + (column) + '-' + (row + i))
+//                 square.innerText = sandwich
+//                 square.style.backgroundColor = 'red'
+//                 console.log('Array: ' + playerArray[row + i - 1][column - 1])
+//                 playerArray[(row - 1) + i][column - 1] = 1
+//             }
+//         }
+//     }
+//     console.log(playerArray)
+
+//     if (directionOfSandwich === 4) {
+//         if ((column - sandwich) < 1) {
+//             console.log('reverse direction')
+//             for (let i = 0; i < sandwich; i++) {
+//                 square = document.getElementById('p' + (column + i) + '-' + (row))
+//                 square.innerText = sandwich
+//                 square.style.backgroundColor = 'red'
+//                     // console.log('Array: ' + playerArray[row][column - 1 + i])
+//                 playerArray[row - 1][(column - 1) + i] = 1
+//             }
+//         } else {
+//             for (let i = 0; i < sandwich; i++) {
+//                 square = document.getElementById('p' + (column - i) + '-' + (row))
+//                 square.innerText = sandwich
+//                 square.style.backgroundColor = 'red'
+//                 console.log('Array: ' + playerArray[row - 1][column - 1 - i])
+//                 playerArray[row - 1][(column - 1) - i] = 1
+//             }
+//         }
+
+//     }
+//     console.log(playerArray)
+
+
+
+//     // console.log(playerArray)
+
+//     // newImg = document.createElement('div')
+//     // newImg.setAttribute.style.width = '300px'
+//     // newImg.setAttribute.style.height = '100px'
+//     // newImg.appendChild(sandwichImgArray[2])
+//     // firstSquare.appendChild(newImg)
+
+
+// }
+
+// function compSandwichPlacement(sandwich) {
+//     // compPlacementArray = computerArray
+//     getStartingSquare()
+
+//     firstSquare = document.getElementById('c' + column + '-' + row)
+//     firstSquare.style.backgroundColor = 'red'
+//     console.log('Array: ' + computerArray[row][column])
+//     computerArray[row][column] = 1
+
+
+//     // console.log(sandwich)
+
+//     // places sandwich on tiles
+//     for (let i = 1; i < sandwich; i++) {
+//         if (directionOfSandwich == 0 || directionOfSandwich == 4) {
+//             if ((row + 1 - sandwich) <= 0) {
+//                 // console.log('reverse direction')
+//                 square = document.getElementById('c' + (column) + '-' + (row + i))
+//                 square.style.backgroundColor = 'red'
+//                 console.log('Array: ' + computerArray[row + i][column])
+//                 computerArray[row + i][column] = 1
+//             } else {
+//                 square = document.getElementById('c' + (column) + '-' + (row - i))
+//                 square.style.backgroundColor = 'red'
+//                 console.log('Array: ' + computerArray[row - i][column])
+//                 computerArray[row - i][column] = 1
+//             }
+
+//         } else if (directionOfSandwich == 1 || directionOfSandwich == 5) {
+//             if ((column - 1 + sandwich) >= (numberOfColumns - 1)) {
+//                 // console.log('reverse direction')
+//                 square = document.getElementById('c' + (column - i) + '-' + (row))
+//                 square.style.backgroundColor = 'red'
+//                 console.log('Array: ' + computerArray[row][column - i])
+//                 computerArray[row][column - i] = 1
+//             } else {
+//                 square = document.getElementById('c' + (column + i) + '-' + (row))
+//                 square.style.backgroundColor = 'red'
+//                 console.log('Array: ' + computerArray[row][column - i])
+//                 computerArray[row][column - i] = 1
+
+//             }
+//         } else if (directionOfSandwich == 2 || directionOfSandwich == 6) {
+//             if ((row + sandwich) >= (numberOfRows - 1)) {
+//                 // console.log('reverse direction')
+//                 square = document.getElementById('c' + (column) + '-' + (row - i))
+//                 console.log(square)
+//                 square.style.backgroundColor = 'red'
+//                 console.log('Array: ' + computerArray[row - i][column])
+//                 computerArray[row - i][column] = 1
+//             } else {
+//                 square = document.getElementById('c' + (column) + '-' + (row + i))
+//                 square.style.backgroundColor = 'red'
+//                 console.log('Array: ' + computerArray[row + i][column])
+//                 computerArray[row + i][column] = 1
+//             }
+//         } else if (directionOfSandwich == 3 || directionOfSandwich == 7) {
+//             if ((column + 1 - sandwich) <= 0) {
+//                 // console.log('reverse direction')
+//                 square = document.getElementById('c' + (column + i) + '-' + (row))
+//                 square.style.backgroundColor = 'red'
+//                 console.log('Array: ' + computerArray[row][column + i])
+//                 computerArray[row][column + i] = 1
+//             } else {
+//                 square = document.getElementById('c' + (column - i) + '-' + (row))
+//                 square.style.backgroundColor = 'red'
+//                 console.log('Array: ' + computerArray[row][column - i])
+//                 computerArray[row][column - i] = 1
+//             }
+//         }
+//     }
+//     console.log(computerArray)
+// }

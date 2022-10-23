@@ -2,9 +2,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: font-family: 'Bangers', cursive;
+        font-family: 'Bangers', cursive;
         font-family: 'Luckiest Guy', cursive;
-        ;
     }
     
     .main {
@@ -53,7 +52,7 @@
     }
     
     #header {
-        text-align: center/;
+        text-align: center;
         grid-column-start: 2;
         grid-column-end: 5;
         /* grid-column: span 5; */
