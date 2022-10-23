@@ -58,7 +58,7 @@ let playerHits,
     diffLevel,
     column,
     row,
-    firstSqaure;
+    firstSquare;
 
 
 
@@ -113,8 +113,8 @@ function createGameBoards(event) {
             let square = document.createElement('div')
             square.setAttribute('class', 'player-square')
             square.setAttribute('id', 'p' + (i + 1) + '-' + (k + 1))
-                // square.innerText = i.toString() + k.toString()
-            square.style.border = ('solid 2px white')
+            square.innerText = (i + 1).toString() + (k + 1).toString()
+            square.style.border = ('solid 2px black')
             square.style.width = ((600 / numberOfColumns) + 'px')
             square.style.height = ((600 / numberOfRows) + 'px')
                 // square.style.width = '100px'
@@ -139,11 +139,13 @@ function createGameBoards(event) {
         for (let k = 0; k < numberOfColumns; k++) {
             let square = document.createElement('div')
             square.setAttribute('class', 'computer-square')
-            square.setAttribute('id', 'c' + (i) + '-' + (k))
+            square.setAttribute('id', 'c' + (i + 1) + '-' + (k + 1))
                 // c = i + 1, r = k + 1
-            square.innerText = i.toString() + k.toString()
+            square.innerText = (i + 1).toString() + (k + 1).toString()
             square.style.border = ('solid 2px black')
             square.style.backgroundColor = ('orange')
+            square.style.width = ((600 / numberOfColumns) + 'px')
+            square.style.height = ((600 / numberOfRows) + 'px')
 
             square.style.gridColumnStart = i + 1
             square.style.gridColumnEnd = i + 2
@@ -158,50 +160,61 @@ function createGameBoards(event) {
             computerArray[i].push(-1)
         }
     }
+    // playerSandwichPlacement(phillyCheese)
+    // playerSandwichPlacement(italianHoagie)
+    // playerSandwichPlacement(meatballSub)
+    // playerSandwichPlacement(hotDog)
+    // playerSandwichPlacement(hamBurgerImg)
+    // playerSandwichPlacement(phillyCheese)
 }
 
 function updateSandwichImg() {
     for (let i = 0; i < diffLevel; i++) {
         gameInfoDisp.appendChild(sandwichImgArray[i])
-        console.log('getting hungry')
+            // console.log('getting hungry')
     }
 }
 
 
 function getStartingSquare() {
-    startingSquare = Math.floor(Math.random() * (numberOfColumns * numberOfRows))
-    console.log(startingSquare)
+    // startingSquare = Math.floor(Math.random() * (numberOfColumns * numberOfRows))
+    startingRow = 1 + Math.floor(Math.random() * (numberOfRows - 1 + 1))
+    startingColumn = 1 + Math.floor(Math.random() * (numberOfColumns - 1 + 1))
+        // startingSquare = [startingColumn, startingRow]
+        // console.log(startingSquare)
         //0=north, 1=east, 2=south, 3=west
 
     directionOfSandwich = Math.floor(Math.random() * 7)
     console.log('direction = ' + directionOfSandwich)
-    startingSquare = startingSquare.toString()
-    if (startingSquare.length === 1) {
-        column = 0, row = startingSquare
-    } else {
-        startingSquare = startingSquare.toString()
-        column = startingSquare.charAt(0)
-        row = startingSquare.charAt(1)
+        // startingSquare = startingSquare.toString()
+        // if (startingSquare.length === 1) {
+        //     column = 1, row = startingSquare
+        // } else {
+        //     startingSquare = startingSquare.toString()
+        //     column = startingSquare.charAt(0)
+        //     row = startingSquare.charAt(1)
 
-    }
-
-    // column = parseInt(column), row = parseInt(row)
+    // }
+    column = startingColumn
+    row = startingRow
+    firstSquare = column + row
+        // column = parseInt(column), row = parseInt(row)
     console.log('First column value: ' + column)
     console.log('First row value: ' + row)
 
-    if (row > numberOfRows) {
+    if (row > numberOfRows + 1) {
         console.log('restart function Starting Square')
         getStartingSquare()
     }
-    if (column > numberOfColumns) {
+    if (column > numberOfColumns + 1) {
         console.log('restart function Starting Square')
         getStartingSquare()
     }
     console.log('starting square')
     console.log(column)
     console.log(row)
-
-    if (computerArray[row][column] === 1 || playerArray[row][column] === 1) {
+    console.log(playerArray)
+    if (computerArray[row - 1][column - 1] === 1 || playerArray[row - 1][column - 1] === 1) {
         getStartingSquare()
     }
 }
@@ -210,8 +223,8 @@ function compSandwichPlacement(sandwich) {
     // compPlacementArray = computerArray
     getStartingSquare()
 
-    firstSqaure = document.getElementById('c' + column + '-' + row)
-    firstSqaure.style.backgroundColor = 'red'
+    firstSquare = document.getElementById('c' + column + '-' + row)
+    firstSquare.style.backgroundColor = 'red'
     console.log('Array: ' + computerArray[row][column])
     computerArray[row][column] = 1
 
@@ -283,18 +296,18 @@ function compSandwichPlacement(sandwich) {
 function playerSandwichPlacement(sandwich) {
     // compPlacementArray = computerArray
     getStartingSquare()
-        // column = parseInt(column), row = parseInt(row)
-    firstSqaure = document.getElementById('p' + column + '-' + row)
-    console.log(firstSqaure)
-    firstSqaure.style.backgroundColor = 'red'
-    console.log('Array: ' + playerArray[row][column])
-    playerArray[row][column] = 1
+    firstSquare = document.getElementById('p' + column + '-' + row)
+    console.log(firstSquare)
+    firstSquare.style.backgroundColor = 'red'
+    console.log('Array: ' + playerArray[row - 1][column - 1])
+    playerArray[row - 1][column - 1] = 1
 
 
     // console.log(sandwich)
 
     // places sandwich on tiles
     for (let i = 1; i < sandwich; i++) {
+
         if (directionOfSandwich == 0 || directionOfSandwich == 4) {
             if ((row + 1 - sandwich) <= 0) {
                 // console.log('reverse direction')
@@ -326,6 +339,8 @@ function playerSandwichPlacement(sandwich) {
         } else if (directionOfSandwich == 2 || directionOfSandwich == 6) {
             if ((row + sandwich) >= (numberOfRows - 1)) {
                 // console.log('reverse direction')
+                console.log(column)
+                console.log(row)
                 square = document.getElementById('p' + (column) + '-' + (row - i))
                 console.log(square)
                 square.style.backgroundColor = 'red'
@@ -358,7 +373,7 @@ function playerSandwichPlacement(sandwich) {
     // newImg.setAttribute.style.width = '300px'
     // newImg.setAttribute.style.height = '100px'
     // newImg.appendChild(sandwichImgArray[2])
-    // firstSqaure.appendChild(newImg)
+    // firstSquare.appendChild(newImg)
 
 
 }
@@ -368,6 +383,7 @@ function playerOrder() {
         playerSandwichPlacement(sandwichesArray[i])
     }
 }
+
 
 // function selectDifficulty() {
 //     if (difficulty = 1)
