@@ -173,11 +173,17 @@ function updateSandwichImg() {
 function playerOrder() {
     for (let i = 0; i < diffLevel; i++) {
         console.log('sandwich number: ' + sandwichesArray[i])
+        getStartingSquare()
+        checkStartingSquare(sandwichesArray[i])
+
+        // interval = setInterval(() => {
+        //     playerSandwichPlacement(sandwichesArray[i])
+        // }, 1000);
         playerSandwichPlacement(sandwichesArray[i])
     }
 }
 
-function getStartingSquare() {
+function getStartingSquare(sandwich) {
     row = 1 + Math.floor(Math.random() * (numberOfRows - 1 + 1))
     column = 1 + Math.floor(Math.random() * (numberOfColumns - 1 + 1))
         // 1: north, 2:east, 3:south: 4: west
@@ -188,19 +194,72 @@ function getStartingSquare() {
         // console.log('direction = ' + directionOfSandwich)
     aRow = row - 1
     aCol = column - 1
+
+    //check
+
+}
+
+function checkStartingSquare(sandwich) {
+    console.log('start check')
+    console.log('row = ' + row)
+    console.log('column = ' + column)
+    console.log('direction = ' + directionOfSandwich)
+    console.log(playerArray)
+    if (directionOfSandwich === 3) {
+        for (let i = row; i < row + sandwich; i++) {
+            console.log('arow: ', i - 1)
+            console.log('acol: ', aCol)
+            if (playerArray[i - 1][aCol] === 1) {
+                console.log('get new start')
+                getStartingSquare()
+            }
+        }
+    }
+    if (directionOfSandwich === 1) {
+        for (let i = row; i > sandwich - row; i--) {
+            console.log('arow: ', i - 1)
+            console.log('acol: ', aCol)
+            if (playerArray[i - 1][aCol] === 1) {
+                console.log('get new start')
+                getStartingSquare()
+            }
+        }
+    }
+    if (directionOfSandwich === 2) {
+        for (let i = column; i < column + sandwich; i++) {
+            console.log('arow: ', aRow)
+            console.log('acol: ', i - 1)
+            if (playerArray[aRow][i - 1] === 1) {
+                console.log('get new start')
+                getStartingSquare()
+            }
+        }
+    }
+
+    if (directionOfSandwich === 4) {
+        for (let i = column; i > sandwich - column; i--) {
+            console.log('arow: ', aRow)
+            console.log('acol: ', i - 1)
+            if (playerArray[aRow][i - 1] === 1) {
+                console.log('get new start')
+                getStartingSquare()
+            }
+        }
+    }
 }
 
 function playerSandwichPlacement(sandwich) {
 
-    getStartingSquare()
-        // checkFirstSquare(sandwich)
+    // getStartingSquare()
+
+    // checkStartingSquare(sandwich)
     console.log('row = ' + row)
     console.log('column = ' + column)
     console.log('direction = ' + directionOfSandwich)
 
     if (directionOfSandwich === 1) {
         console.log('north')
-        if ((row - sandwich) > 1) {
+        if ((row - sandwich) >= 0) {
             for (let i = row; i > (row - sandwich); i--) {
                 square = document.getElementById('p' + i + '-' + column)
                 square.innerText = sandwich
@@ -222,7 +281,7 @@ function playerSandwichPlacement(sandwich) {
 
     if (directionOfSandwich === 3) {
         console.log('south')
-        if ((row + sandwich) < numberOfRows) {
+        if ((row + sandwich) <= numberOfRows + 1) {
             for (let i = row; i < (row + sandwich); i++) {
                 square = document.getElementById('p' + i + '-' + column)
                 square.innerText = sandwich
@@ -244,7 +303,7 @@ function playerSandwichPlacement(sandwich) {
 
     if (directionOfSandwich === 2) {
         console.log('east')
-        if ((column + sandwich) < numberOfColumns) {
+        if ((column + sandwich) <= numberOfColumns + 1) {
             for (let i = column; i < (sandwich + column); i++) {
                 square = document.getElementById('p' + row + '-' + i)
                 square.innerText = sandwich
@@ -266,7 +325,7 @@ function playerSandwichPlacement(sandwich) {
 
     if (directionOfSandwich === 4) {
         console.log('west')
-        if ((column - sandwich) > 1) {
+        if ((column - sandwich) >= 0) {
             for (let i = column; i > (column - sandwich); i--) {
                 square = document.getElementById('p' + row + '-' + i)
                 square.innerText = sandwich
@@ -285,7 +344,6 @@ function playerSandwichPlacement(sandwich) {
             }
         }
     }
-
 
     console.log(playerArray)
 }
