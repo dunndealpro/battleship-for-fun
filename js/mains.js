@@ -52,6 +52,7 @@ let numberOfRows = 10,
 
 //game play info
 let playerHits,
+    turnName,
     computerHits,
     playerEats,
     computerEats,
@@ -874,6 +875,7 @@ function startGame() {
 }
 
 function computerSquareChosen(e) {
+    turnName = "Player"
     console.log(e.target.id)
     e.target.style.backgroundColor = "rgb(255, 255, 0)"
         // for (let square of computerSquares) {
@@ -896,13 +898,22 @@ function computerSquareChosen(e) {
         turnIndicator.innerText = 'MISS!'
     }
 
-    checkForSandwich()
+    checkForHamburger()
         // checkForWin()
     setTimeout(computerTurnInit, 2000)
 }
 
-function checkForSandwich(e) {
+function checkForHamburger() {
     console.log(playerHitLog)
+    if (playerHitLog.includes('1')) {
+        console.log("hamburger")
+        turnIndicator.innerText = turnName + ' ate a Hamburger!'
+    }
+    if (playerHitLog.includes('2')) {
+        let findHotDog = playerHitLog.find(element => element === 2)
+        hotDog = playerHitLog.filter(findHotDog)
+        console.log(hotDog)
+    }
 }
 
 function computerTurnInit() {
@@ -912,6 +923,7 @@ function computerTurnInit() {
 }
 
 function computerTurn() {
+    turnName = "Comp"
     console.log('computer turn')
     cTempRow = 1 + Math.floor(Math.random() * (numberOfRows - 1 + 1))
     cTempCol = 1 + Math.floor(Math.random() * (numberOfColumns - 1 + 1))
