@@ -63,7 +63,9 @@ let playerHits,
     aCol,
     computerSquares,
     playerSquares,
-    firstSquare = [];
+    firstSquare = [],
+    playerHitLog = [],
+    computerHitLog = [];
 
 
 
@@ -863,31 +865,44 @@ function startGame() {
     turnIndicator.innerText = 'Player Turn'
     computerSquares = document.getElementsByClassName('computer-square')
     playerSquares = document.getElementsByClassName('player-square')
-        // console.log(computerSquares)
 
     for (let square of computerSquares) {
         square.addEventListener("click", computerSquareChosen);
     }
+    playerTurn()
+        // }
+}
 
-    function computerSquareChosen(e) {
-        console.log(e.target.id)
-
-        e.target.style.backgroundColor = "rgb(255, 255, 0)"
-        tempSquare = e.target.id
-        tempSquare = tempSquare.slice(1)
-        tempSquare = tempSquare.split('-')
-        console.log(tempSquare)
-        tempRow = tempSquare[0]
-        tempCol = tempSquare[1]
-        if (computerArray[tempRow - 1][tempCol - 1] === 1) {
-            console.log('hit')
-            turnIndicator.innerText = 'HIT!'
-        } else {
-            console.log('miss')
-            turnIndicator.innerText = 'MISS!'
-        }
-        setTimeout(computerTurnInit, 2000)
+function computerSquareChosen(e) {
+    console.log(e.target.id)
+    e.target.style.backgroundColor = "rgb(255, 255, 0)"
+        // for (let square of computerSquares) {
+        //     console.log('is this working?')
+        //     square.removeEventListener("click", computerSquareChosen, true);
+        // }
+    tempCheckSquare = e.target.innerText
+    tempSquare = e.target.id
+    tempSquare = tempSquare.slice(1)
+    tempSquare = tempSquare.split('-')
+    console.log(tempSquare)
+    tempRow = tempSquare[0]
+    tempCol = tempSquare[1]
+    if (computerArray[tempRow - 1][tempCol - 1] === 1) {
+        console.log('hit')
+        turnIndicator.innerText = 'HIT!'
+        playerHitLog.push(tempCheckSquare)
+    } else {
+        console.log('miss')
+        turnIndicator.innerText = 'MISS!'
     }
+
+    checkForSandwich()
+        // checkForWin()
+    setTimeout(computerTurnInit, 2000)
+}
+
+function checkForSandwich(e) {
+    console.log(playerHitLog)
 }
 
 function computerTurnInit() {
@@ -908,6 +923,7 @@ function computerTurn() {
     if (playerArray[cTempRow - 1][cTempCol - 1] === 1) {
         turnIndicator.innerText = 'Comp HIT!'
         tempSquare.style.backgroundColor = 'red'
+        computerHitLog.push(tempCheckSquare)
     } else {
         turnIndicator.innerText = 'Comp Miss'
         tempSquare.style.backgroundColor = 'white'
@@ -915,36 +931,34 @@ function computerTurn() {
     setTimeout(playerTurn, 2000)
 }
 
+// function computerSquareChosen(e) {
+//     console.log(e.target.id)
+
+//     e.target.style.backgroundColor = "rgb(255, 255, 0)"
+//     tempSquare = e.target.id
+//     tempSquare = tempSquare.slice(1)
+//     tempSquare = tempSquare.split('-')
+//     console.log(tempSquare)
+//     tempRow = tempSquare[0]
+//     tempCol = tempSquare[1]
+//     if (computerArray[tempRow - 1][tempCol - 1] === 1) {
+//         console.log('hit')
+//         turnIndicator.innerText = 'HIT!'
+//     } else {
+//         console.log('miss')
+//         turnIndicator.innerText = 'MISS!'
+//     }
+//     setTimeout(computerTurnInit, 2000)
+// }
+
 function playerTurn() {
     turnIndicator.innerText = 'Player Turn'
-    computerSquares = document.getElementsByClassName('computer-square')
-    playerSquares = document.getElementsByClassName('player-square')
-        // console.log(computerSquares)
-
     for (let square of computerSquares) {
         square.addEventListener("click", computerSquareChosen);
     }
-
-    function computerSquareChosen(e) {
-        console.log(e.target.id)
-
-        e.target.style.backgroundColor = "rgb(255, 255, 0)"
-        tempSquare = e.target.id
-        tempSquare = tempSquare.slice(1)
-        tempSquare = tempSquare.split('-')
-        console.log(tempSquare)
-        tempRow = tempSquare[0]
-        tempCol = tempSquare[1]
-        if (computerArray[tempRow - 1][tempCol - 1] === 1) {
-            console.log('hit')
-            turnIndicator.innerText = 'HIT!'
-        } else {
-            console.log('miss')
-            turnIndicator.innerText = 'MISS!'
-        }
-        setTimeout(computerTurnInit, 2000)
-    }
 }
+
+
 // const computerSquareChosen = e => {
 //     console.log(e.target.id); // Get ID of Clicked Element
 // }
