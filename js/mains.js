@@ -929,15 +929,15 @@ function computerSquareChosen(e) {
     }
 
 
-    checkPlayerEaten()
-        // checkForHamburger()
-        // checkForWin()
+    // checkPlayerEaten()
+    // checkForHamburger()
+    // checkForWin()
     setTimeout(computerTurnInit, 2000)
 }
 
 
 function checkPlayerEaten() {
-    console.log('check start')
+    console.log('player check start')
     for (let i = 0; i < diffLevel; i++) {
         console.log('player sandwich array: ' + eatenPlayerSandwichsArray[i])
         if (eatenPlayerSandwichsArray[i] === false) {
@@ -965,20 +965,20 @@ function checkForHamburger() {
     if (turnName === 'Player') {
         console.log(playerHitLog)
         if (playerHitLog.includes('1')) {
-            console.log("hamburger")
+            // console.log("hamburger")
             turnIndicator.innerText = turnName + ' ate a Hamburger!'
             removeElement = playerHitLog.indexOf('1')
             playerHitLog.splice(removeElement, 1)
-            eatenPlayerHamburger = true
+            eatenPlayerHamburger = null
         }
     } else if (turnName === 'Comp') {
         console.log(compHitLog)
         if (compHitLog.includes('1')) {
-            console.log("hamburger")
+            // console.log("hamburger")
             turnIndicator.innerText = turnName + ' ate a Hamburger!'
             removeElement = compHitLog.indexOf('1')
             compHitLog.splice(removeElement, 1)
-            eatenCompHamburger = true
+            eatenCompHamburger = null
         }
     }
 
@@ -1005,11 +1005,14 @@ function checkForHotDog() {
                 for (let i = 0; i < hotDog; i++) {
                     removeElement = playerHitLog.indexOf('2')
                     console.log('remove playerhitlog')
-                    playerHitLog.splice(removeElement, 1)
+                    removed = playerHitLog.splice(removeElement, 1)
+                    console.log(removed)
+                    eatenPlayerHotDog = null
                 }
             }
         }
     } else if (turnName === 'Comp') {
+
         tempLog = []
         for (let i = 0; i < playerHitLog.length; i++) {
             if (compHitLog[i] === '2') {
@@ -1024,6 +1027,7 @@ function checkForHotDog() {
                 for (let i = 0; i < hotDog; i++) {
                     removeElement = compHitLog.indexOf('2')
                     compHitLog.splice(removeElement, 1)
+                    eatenCompHotDog = null
                 }
             }
         }
@@ -1032,7 +1036,11 @@ function checkForHotDog() {
 
 function checkForMeatball() {
     // check for meatball here
+    // console.log('player meatball check')
+    // console.log(playerHitLog)
     if (turnName === 'Player') {
+        console.log('player meatball check')
+        console.log(playerHitLog)
         tempLog = []
         for (let i = 0; i < playerHitLog.length; i++) {
             if (playerHitLog[i] === '3') {
@@ -1042,11 +1050,13 @@ function checkForMeatball() {
                 console.log('You ate a meatball')
                 turnIndicator.innerText = turnName + ' ate a meatball sub!'
                 eatenPlayerMeatballSub = true
+                console.log(eatenPlayerMeatballSub)
             }
             if (eatenPlayerMeatballSub === true) {
                 for (let i = 0; i < meatballSub; i++) {
                     removeElement = playerHitLog.indexOf('3')
                     playerHitLog.splice(removeElement, 1)
+                    eatenPlayerMeatballSub = null
                 }
             }
         }
@@ -1065,6 +1075,7 @@ function checkForMeatball() {
                 for (let i = 0; i < meatballSub; i++) {
                     removeElement = compHitLog.indexOf('3')
                     compHitLog.splice(removeElement, 1)
+                    eatenCompMeatballSub = null
                 }
             }
         }
@@ -1080,9 +1091,16 @@ function checkForItalian() {
                 tempLog.push(playerHitLog[i])
             }
             if (tempLog.length === italianHoagie) {
-                console.log('You ate a hot dog')
+                console.log('You ate an Italian Hoagie')
                 turnIndicator.innerText = turnName + ' ate an Italian Hoagie!'
                 eatenPlayerItalianHoagie = true
+            }
+            if (eatenPlayerItalianHoagie === true) {
+                for (let i = 0; i < italianHoagie; i++) {
+                    removeElement = playerHitLog.indexOf('4')
+                    playerHitLog.splice(removeElement, 1)
+                    eatenPlayerItalianHoagie = null
+                }
             }
         }
     } else if (turnName === 'Comp') {
@@ -1092,9 +1110,16 @@ function checkForItalian() {
                 tempLog.push(compHitLog[i])
             }
             if (tempLog.length === italianHoagie) {
-                console.log('You ate a hot dog')
+                console.log('You ate an Italian Hoagie')
                 turnIndicator.innerText = turnName + ' ate an Italian Hoagie!'
                 eatenCompItalianHoagie = true
+            }
+            if (eatenCompItalianHoagie === true) {
+                for (let i = 0; i < italianHoagie; i++) {
+                    removeElement = playerHitLog.indexOf('3')
+                    playerHitLog.splice(removeElement, 1)
+                    eatenPlayerMeatballSub = null
+                }
             }
         }
     }
@@ -1113,6 +1138,13 @@ function checkForPhilly() {
                 turnIndicator.innerText = turnName + ' ate a Philly Cheesesteak!'
                 eatenPlayerPhillyCheese = true
             }
+            if (eatenPlayerPhillyCheese === true) {
+                for (let i = 0; i < phillyCheese; i++) {
+                    removeElement = playerHitLog.indexOf('5')
+                    playerHitLog.splice(removeElement, 1)
+                    eatenPlayerPhillyCheese = null
+                }
+            }
         }
     } else if (turnName === 'Comp') {
         tempLog = []
@@ -1124,6 +1156,13 @@ function checkForPhilly() {
                 console.log('You ate a philly cheese')
                 turnIndicator.innerText = turnName + ' ate a Philly Cheesesteak!'
                 eatenCompPhillyCheese = true
+            }
+            if (eatenCompPhillyCheese === true) {
+                for (let i = 0; i < phillyCheese; i++) {
+                    removeElement = compHitLog.indexOf('5')
+                    playerHitLog.splice(removeElement, 1)
+                    eatenCompPhillyCheese = null
+                }
             }
         }
     }
