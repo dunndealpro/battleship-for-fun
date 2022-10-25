@@ -74,7 +74,8 @@ let playerHits,
     eatenCompMeatballSub = false,
     eatenCompItalianHoagie = false,
     eatenCompPhillyCheese = false,
-    firstSquare = [],
+    playerNullCount = 0
+firstSquare = [],
     playerHitLog = [],
     compHitLog = [];
 
@@ -923,6 +924,7 @@ function computerSquareChosen(e) {
         playerHitLog.push(tempCheckSquare)
         console.log(playerHitLog)
         checkPlayerEaten()
+        checkPlayWin()
     } else {
         console.log('miss')
         turnIndicator.innerText = 'MISS!'
@@ -935,23 +937,56 @@ function computerSquareChosen(e) {
     setTimeout(computerTurnInit, 2000)
 }
 
-
-function checkPlayerEaten() {
-    console.log('player check start')
-    for (let i = 0; i < diffLevel; i++) {
-        console.log('player sandwich array: ' + eatenPlayerSandwichsArray[i])
-        if (eatenPlayerSandwichsArray[i] === false) {
-            // console.log('hih shit')
-            checkSandwiches[i]()
-        }
+function checkPlayWin() {
+    console.log('player null count')
+    console.log(playerNullCount)
+    if (playerNullCount === diffLevel) {
+        console.log('player wins')
+        turnIndicator.innerText = 'Player Wins!'
     }
 }
 
+function checkCompWin() {
+    console.log('comp null count')
+    console.log(compNullCount)
+    if (compNullCount === diffLevel) {
+        console.log('comp wins')
+        turnIndicator.innerText = 'Comp Wins!'
+    }
+}
+
+function checkPlayerEaten() {
+    console.log('player check start')
+
+    for (let i = 0; i < diffLevel; i++) {
+        console.log(sandwichesArray[i])
+        console.log('player sandwich array: ' + eatenPlayerSandwichsArray[i])
+        if (eatenPlayerSandwichsArray[i] === false) {
+            console.log('hih shit')
+            checkSandwiches[i]()
+        }
+    }
+
+
+}
+
 function checkCompEaten() {
+    let compNullCount = 0
     for (let i = 0; i < diffLevel; i++) {
         if (eatenCompSandwichsArray[i] === false) {
             checkSandwiches[i]()
         }
+    }
+    for (let i = 0; i < diffLevel; i++) {
+        console.log('start counting nulls')
+        if (eatenCompSandwichsArray[i] === null) {
+            compNullCount += 1
+        }
+
+    }
+
+    if (compNullCount === diffLevel) {
+        turnIndicator.innerText = 'Comp Wins!'
     }
 }
 
@@ -969,7 +1004,13 @@ function checkForHamburger() {
             turnIndicator.innerText = turnName + ' ate a Hamburger!'
             removeElement = playerHitLog.indexOf('1')
             playerHitLog.splice(removeElement, 1)
-            eatenPlayerHamburger = null
+            eatenPlayerHamburger = true
+            console.log('hburg ' + eatenPlayerHamburger)
+        }
+        if (eatenPlayerHamburger === true) {
+            eatenPlayerHamburger = false
+            console.log('hburg ' + eatenPlayerHamburger)
+            playerNullCount += 1
         }
     } else if (turnName === 'Comp') {
         console.log(compHitLog)
@@ -979,6 +1020,11 @@ function checkForHamburger() {
             removeElement = compHitLog.indexOf('1')
             compHitLog.splice(removeElement, 1)
             eatenCompHamburger = null
+        }
+        if (eatenCompHamburger === true) {
+            eatenCompHamburger = false
+            console.log('hburg ' + eatenCompHamburger)
+            compNullCount += 1
         }
     }
 
@@ -1007,8 +1053,10 @@ function checkForHotDog() {
                     console.log('remove playerhitlog')
                     removed = playerHitLog.splice(removeElement, 1)
                     console.log(removed)
-                    eatenPlayerHotDog = null
+                    eatenPlayerHotDog = false
+                        // console.log(playerNullCount)
                 }
+                playerNullCount += 1
             }
         }
     } else if (turnName === 'Comp') {
@@ -1027,8 +1075,9 @@ function checkForHotDog() {
                 for (let i = 0; i < hotDog; i++) {
                     removeElement = compHitLog.indexOf('2')
                     compHitLog.splice(removeElement, 1)
-                    eatenCompHotDog = null
+                    eatenCompHotDog = false
                 }
+                compNullCount += 1
             }
         }
     }
@@ -1056,8 +1105,9 @@ function checkForMeatball() {
                 for (let i = 0; i < meatballSub; i++) {
                     removeElement = playerHitLog.indexOf('3')
                     playerHitLog.splice(removeElement, 1)
-                    eatenPlayerMeatballSub = null
+                    eatenPlayerMeatballSub = false
                 }
+                playerNullCount += 1
             }
         }
     } else if (turnName === 'Comp') {
@@ -1075,8 +1125,9 @@ function checkForMeatball() {
                 for (let i = 0; i < meatballSub; i++) {
                     removeElement = compHitLog.indexOf('3')
                     compHitLog.splice(removeElement, 1)
-                    eatenCompMeatballSub = null
+                    eatenCompMeatballSub = false
                 }
+                compNullCount += 1
             }
         }
     }
@@ -1099,13 +1150,14 @@ function checkForItalian() {
                 for (let i = 0; i < italianHoagie; i++) {
                     removeElement = playerHitLog.indexOf('4')
                     playerHitLog.splice(removeElement, 1)
-                    eatenPlayerItalianHoagie = null
+                    eatenPlayerItalianHoagie = false
                 }
+                playerNullCount += 1
             }
         }
     } else if (turnName === 'Comp') {
         tempLog = []
-        for (let i = 0; i < playerHitLog.length; i++) {
+        for (let i = 0; i < compHitLog.length; i++) {
             if (compHitLog[i] === '4') {
                 tempLog.push(compHitLog[i])
             }
@@ -1116,10 +1168,11 @@ function checkForItalian() {
             }
             if (eatenCompItalianHoagie === true) {
                 for (let i = 0; i < italianHoagie; i++) {
-                    removeElement = playerHitLog.indexOf('3')
+                    removeElement = compHitLog.indexOf('3')
                     playerHitLog.splice(removeElement, 1)
-                    eatenPlayerMeatballSub = null
+                    eatenCompMeatballSub = false
                 }
+                compNullCount += 1
             }
         }
     }
@@ -1142,13 +1195,14 @@ function checkForPhilly() {
                 for (let i = 0; i < phillyCheese; i++) {
                     removeElement = playerHitLog.indexOf('5')
                     playerHitLog.splice(removeElement, 1)
-                    eatenPlayerPhillyCheese = null
+                    eatenPlayerPhillyCheese = false
                 }
+                playerNullCount += 1
             }
         }
     } else if (turnName === 'Comp') {
         tempLog = []
-        for (let i = 0; i < playerHitLog.length; i++) {
+        for (let i = 0; i < compHitLog.length; i++) {
             if (compHitLog[i] === '5') {
                 tempLog.push(compHitLog[i])
             }
@@ -1161,8 +1215,9 @@ function checkForPhilly() {
                 for (let i = 0; i < phillyCheese; i++) {
                     removeElement = compHitLog.indexOf('5')
                     playerHitLog.splice(removeElement, 1)
-                    eatenCompPhillyCheese = null
+                    eatenCompPhillyCheese = false
                 }
+                compNullCount += 1
             }
         }
     }
@@ -1193,6 +1248,7 @@ function computerTurn() {
         tempSquare.style.backgroundColor = 'white'
     }
     checkCompEaten()
+    checkCompWin()
     setTimeout(playerTurn, 2000)
 }
 
