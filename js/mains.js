@@ -29,6 +29,8 @@ italianHoagieImg1.src = "images/subsandwich.png"
 let phillyCheeseImg = new Image(200, 50)
 phillyCheeseImg.src = "images/phillycheese.png"
 
+let winImageImg = new Image(388, 509)
+winImageImg.src = 'images/winimage.png'
 
 
 //sounds
@@ -74,8 +76,9 @@ let playerHits,
     eatenCompMeatballSub = false,
     eatenCompItalianHoagie = false,
     eatenCompPhillyCheese = false,
-    playerNullCount = 0
-firstSquare = [],
+    playerNullCount = 0,
+    compNullCount = 0,
+    firstSquare = [],
     playerHitLog = [],
     compHitLog = [];
 
@@ -102,11 +105,18 @@ famished = document.getElementById('hard')
 gameInfoDisp = document.getElementById('game-info')
 orderSandwiches = document.getElementById('place-sandwiches')
 turnIndicator = document.getElementById('turn-indicator')
+winView = document.getElementById('win-view')
+resultsDisplay = document.getElementById('results')
+newGame = document.getElementById('new-game')
+exitGame = document.getElementById('exit')
 
 
 
 /*-------Functions-------*/
 
+function exitGamePlay() {
+    window.close()
+}
 
 function createGameBoards(event) {
     if (event.target.id === 'easy') {
@@ -942,7 +952,25 @@ function checkPlayWin() {
     console.log(playerNullCount)
     if (playerNullCount === diffLevel) {
         console.log('player wins')
-        turnIndicator.innerText = 'Player Wins!'
+            // turnIndicator.innerText = 'Player Wins!'
+            // mainGameArea.appendChild(resultsDisplay)
+        resultsDisplay.innerText = 'Player Wins!'
+        newGame.innerText = "I'm Still Hungy"
+        exitGame.innerText = "No, I'm Full"
+        mainGameArea.appendChild(winView)
+
+        winView.appendChild(resultsDisplay)
+        winView.appendChild(winImageImg)
+        winView.appendChild(newGame)
+        winView.appendChild(exitGame)
+
+        newGame.addEventListener('click', reStart)
+        exitGame.addEventListener('click', exitGamePlay)
+
+
+        // resultView = document.createElement('div')
+        // resultView.setAttribute('id', 'results')
+
     }
 }
 
@@ -1321,7 +1349,26 @@ function init() {
     welcomeImg1.appendChild(italianHoagieImg)
     body.removeChild(mainGameArea)
     body.removeChild(difficultyWindow)
-        // mainGameArea.style.visibility = 'hidden'
+
+    body.removeChild(winView)
+
+    // mainGameArea.style.visibility = 'hidden'
+}
+
+function reStart() {
+    welcomeTag1.style.visibility = 'visible'
+    welcomeTag2.style.visibility = 'visible'
+    welcomeTag1.innerText = welcomeTagTxt1
+    welcomeTag2.innerHTML = welcomeTagTxt2
+    welcomeImg1.appendChild(italianHoagieImg)
+    body.removeChild(mainGameArea)
+    body.removeChild(difficultyWindow)
+
+    body.removeChild(winView)
+
+    // mainGameArea.style.visibility = 'hidden'
+    goToDeliBoard()
+    playerOrder()
 }
 
 init()
