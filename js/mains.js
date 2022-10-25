@@ -9,7 +9,7 @@ const hamBurger = 1,
     italianHoagie = 4,
     phillyCheese = 5;
 
-const sandwichesArray = [hamBurger, hotDog, meatballSub, italianHoagie, phillyCheese]
+
 
 let hamBurgerImg = new Image(50, 50)
 hamBurgerImg.src = "images/hamburger1.png"
@@ -29,7 +29,7 @@ italianHoagieImg1.src = "images/subsandwich.png"
 let phillyCheeseImg = new Image(200, 50)
 phillyCheeseImg.src = "images/phillycheese.png"
 
-sandwichImgArray = [hamBurgerImg, hotDogImg, meatBallSubImg, italianHoagieImg1, phillyCheeseImg]
+
 
 //sounds
 // const eatSound,
@@ -64,11 +64,25 @@ let playerHits,
     aCol,
     computerSquares,
     playerSquares,
+    eatenPlayerHamburger = false,
+    eatenPlayerHotDog = false,
+    eatenPlayerMeatballSub = false,
+    eatenPlayerItalianHoagie = false,
+    eatenPlayerPhillyCheese = false,
+    eatenCompHamburger = false,
+    eatenCompHotDog = false,
+    eatenCompMeatballSub = false,
+    eatenCompItalianHoagie = false,
+    eatenCompPhillyCheese = false,
     firstSquare = [],
     playerHitLog = [],
-    computerHitLog = [];
+    compHitLog = [];
 
-
+/*-----Variable Arrays------*/
+const sandwichesArray = [hamBurger, hotDog, meatballSub, italianHoagie, phillyCheese]
+sandwichImgArray = [hamBurgerImg, hotDogImg, meatBallSubImg, italianHoagieImg1, phillyCheeseImg]
+eatenPlayerSandwichsArray = [eatenPlayerHamburger, eatenPlayerHotDog, eatenPlayerMeatballSub, eatenPlayerItalianHoagie, eatenPlayerPhillyCheese]
+eatenCompSandwichsArray = [eatenCompHamburger, eatenCompHotDog, eatenCompMeatballSub, eatenCompItalianHoagie, eatenCompPhillyCheese]
 
 /*-----Cached Elements------*/
 body = document.querySelector('body')
@@ -215,23 +229,23 @@ function getStartingSquare() {
         // 1: north, 2:east, 3:south: 4: west
     directionOfSandwich = 1 + Math.floor(Math.random() * (2 - 1 + 1))
     directionOfSandwich = parseInt(directionOfSandwich, 10)
-    console.log('start row = ' + row)
-    console.log('start column = ' + column)
-    console.log('start direction = ' + directionOfSandwich)
+        // console.log('start row = ' + row)
+        // console.log('start column = ' + column)
+        // console.log('start direction = ' + directionOfSandwich)
     aRow = row - 1
     aCol = column - 1
 
 }
 
 function checkPlayerStartingSquare(sandwich) {
-    console.log('checking sandwich: ', sandwich)
-    console.log('start check')
-    console.log('row = ' + row)
-    console.log('column = ' + column)
+    // console.log('checking sandwich: ', sandwich)
+    // console.log('start check')
+    // console.log('row = ' + row)
+    // console.log('column = ' + column)
 
 
     if (directionOfSandwich === 1) {
-        console.log('start check north')
+        // console.log('start check north')
         if ((row - sandwich) >= 0) {
             for (let i = row; i > (row - sandwich); i--) {
                 // console.log('i: ', i)
@@ -239,7 +253,7 @@ function checkPlayerStartingSquare(sandwich) {
                 // console.log('arow: ', i - 1)
                 // console.log('acol: ', aCol)
                 if (playerArray[i - 1][aCol] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkPlayerStartingSquare(sandwich)
                     break
@@ -253,14 +267,16 @@ function checkPlayerStartingSquare(sandwich) {
                 // console.log('arow: ', i - 1)
                 // console.log('acol: ', aCol)
                 if (playerArray[i - 1][aCol] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkPlayerStartingSquare(sandwich)
                     break
                 }
             }
         }
-    } else { console.log('check good!') }
+    } else {
+        // console.log('check good!') 
+    }
 
     if (directionOfSandwich === 3) {
         console.log('start check  south')
@@ -271,7 +287,7 @@ function checkPlayerStartingSquare(sandwich) {
                 // console.log('arow: ', i - 1)
                 // console.log('acol: ', aCol)
                 if (playerArray[i - 1][aCol] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkPlayerStartingSquare(sandwich)
                     break
@@ -285,17 +301,19 @@ function checkPlayerStartingSquare(sandwich) {
                 // console.log('arow: ', i - 1)
                 // console.log('acol: ', aCol)
                 if (playerArray[i - 1][aCol] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkPlayerStartingSquare(sandwich)
                     break
                 }
             }
         }
-    } else { console.log('check good!') }
+    } else {
+        //  console.log('check good!')
+    }
 
     if (directionOfSandwich === 2) {
-        console.log('start check east')
+        // console.log('start check east')
         if ((column + sandwich) <= numberOfColumns) {
             for (let i = column; i < (sandwich + column); i++) {
                 // console.log('i: ', i)
@@ -303,28 +321,30 @@ function checkPlayerStartingSquare(sandwich) {
                 // console.log('arow: ', aRow)
                 // console.log('acol: ', i - 1)
                 if (playerArray[aRow][i - 1] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkPlayerStartingSquare(sandwich)
                     break
                 }
             }
         } else {
-            console.log('start check reverse direction')
+            // console.log('start check reverse direction')
             for (let i = column; i > (column - sandwich); i--) {
                 // console.log('i: ', i)
                 // console.log('condition = ', column - sandwich)
                 // console.log('arow: ', aRow)
                 // console.log('acol: ', i - 1)
                 if (playerArray[aRow][i - 1] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkPlayerStartingSquare(sandwich)
                     break
                 }
             }
         }
-    } else { console.log('check good!') }
+    } else {
+        // console.log('check good!')
+    }
 
     if (directionOfSandwich === 4) {
         console.log('start check west')
@@ -335,7 +355,7 @@ function checkPlayerStartingSquare(sandwich) {
                 // console.log('arow: ', aRow)
                 // console.log('acol: ', i - 1)
                 if (playerArray[aRow][i - 1] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkPlayerStartingSquare(sandwich)
                     break
@@ -349,14 +369,16 @@ function checkPlayerStartingSquare(sandwich) {
                 // console.log('arow: ', aRow)
                 // console.log('acol: ', i - 1)
                 if (playerArray[aRow][i - 1] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkPlayerStartingSquare(sandwich)
                     break
                 }
             }
         }
-    } else { console.log('check good!') }
+    } else {
+        //  console.log('check good!')
+    }
 
 
 }
@@ -367,12 +389,12 @@ function playerSandwichPlacement(sandwich) {
     // getStartingSquare()
 
     // checkStartingSquare(sandwich)
-    console.log('row = ' + row)
-    console.log('column = ' + column)
-    console.log('direction = ' + directionOfSandwich)
+    // console.log('row = ' + row)
+    // console.log('column = ' + column)
+    // console.log('direction = ' + directionOfSandwich)
 
     if (directionOfSandwich === 1) {
-        console.log('north')
+        // console.log('north')
         if ((row - sandwich) >= 0) {
             for (let i = row; i > (row - sandwich); i--) {
                 square = document.getElementById('p' + i + '-' + column)
@@ -383,7 +405,7 @@ function playerSandwichPlacement(sandwich) {
                     // lastDirectionOfSandwich = 1
             }
         } else {
-            console.log('reverse direction')
+            // console.log('reverse direction')
             for (let i = row; i < (sandwich + row); i++) {
                 square = document.getElementById('p' + i + '-' + column)
                 square.innerText = sandwich
@@ -396,7 +418,7 @@ function playerSandwichPlacement(sandwich) {
     }
 
     if (directionOfSandwich === 3) {
-        console.log('south')
+        // console.log('south')
         if ((row + sandwich) <= numberOfRows) {
             for (let i = row; i < (row + sandwich); i++) {
                 square = document.getElementById('p' + i + '-' + column)
@@ -407,7 +429,7 @@ function playerSandwichPlacement(sandwich) {
                     // lastDirectionOfSandwich = 3
             }
         } else {
-            console.log('reverse direction')
+            // console.log('reverse direction')
             for (let i = row; i > (row - sandwich); i--) {
                 square = document.getElementById('p' + i + '-' + column)
                 square.innerText = sandwich
@@ -420,7 +442,7 @@ function playerSandwichPlacement(sandwich) {
     }
 
     if (directionOfSandwich === 2) {
-        console.log('east')
+        // console.log('east')
         if ((column + sandwich) <= numberOfColumns) {
             for (let i = column; i < (sandwich + column); i++) {
                 square = document.getElementById('p' + row + '-' + i)
@@ -431,7 +453,7 @@ function playerSandwichPlacement(sandwich) {
                     // lastDirectionOfSandwich = 2
             }
         } else {
-            console.log('reverse direction')
+            // console.log('reverse direction')
             for (let i = column; i > (column - sandwich); i--) {
                 square = document.getElementById('p' + row + '-' + i)
                 square.innerText = sandwich
@@ -444,7 +466,7 @@ function playerSandwichPlacement(sandwich) {
     }
 
     if (directionOfSandwich === 4) {
-        console.log('west')
+        // console.log('west')
         if ((column - sandwich) >= 0) {
             for (let i = column; i > (column - sandwich); i--) {
                 square = document.getElementById('p' + row + '-' + i)
@@ -455,7 +477,7 @@ function playerSandwichPlacement(sandwich) {
                     // lastDirectionOfSandwich = 4
             }
         } else {
-            console.log('reverse direction')
+            // console.log('reverse direction')
             for (let i = column; i < (sandwich + column); i++) {
                 square = document.getElementById('p' + row + '-' + i)
                 square.innerText = sandwich
@@ -467,10 +489,8 @@ function playerSandwichPlacement(sandwich) {
         }
     }
 
-    console.log(playerArray)
+    // console.log(playerArray)
 }
-
-
 
 /*with image placement*/
 // function playerSandwichPlacement(sandwich) {
@@ -615,14 +635,14 @@ function playerSandwichPlacement(sandwich) {
 // }
 
 function checkComputerStartingSquare(sandwich) {
-    console.log('checking sandwich: ', sandwich)
-    console.log('start check')
-    console.log('row = ' + row)
-    console.log('column = ' + column)
+    // console.log('checking sandwich: ', sandwich)
+    // console.log('start check')
+    // console.log('row = ' + row)
+    // console.log('column = ' + column)
 
 
     if (directionOfSandwich === 1) {
-        console.log('start check north')
+        // console.log('start check north')
         if ((row - sandwich) >= 0) {
             for (let i = row; i > (row - sandwich); i--) {
                 // console.log('i: ', i)
@@ -630,28 +650,30 @@ function checkComputerStartingSquare(sandwich) {
                 // console.log('arow: ', i - 1)
                 // console.log('acol: ', aCol)
                 if (computerArray[i - 1][aCol] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkComputerStartingSquare(sandwich)
                     break
                 }
             }
         } else {
-            console.log('start check reverse direction')
+            // console.log('start check reverse direction')
             for (let i = row; i < (sandwich + row); i++) {
                 // console.log('i: ', i)
                 // console.log('condition = ', sandwich + row)
                 // console.log('arow: ', i - 1)
                 // console.log('acol: ', aCol)
                 if (computerArray[i - 1][aCol] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkComputerStartingSquare(sandwich)
                     break
                 }
             }
         }
-    } else { console.log('check good!') }
+    } else {
+        // console.log('check good!')
+    }
 
     if (directionOfSandwich === 3) {
         console.log('start check  south')
@@ -662,7 +684,7 @@ function checkComputerStartingSquare(sandwich) {
                 // console.log('arow: ', i - 1)
                 // console.log('acol: ', aCol)
                 if (computerArray[i - 1][aCol] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkComputerStartingSquare(sandwich)
                     break
@@ -676,17 +698,19 @@ function checkComputerStartingSquare(sandwich) {
                 // console.log('arow: ', i - 1)
                 // console.log('acol: ', aCol)
                 if (computerArray[i - 1][aCol] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkComputerStartingSquare(sandwich)
                     break
                 }
             }
         }
-    } else { console.log('check good!') }
+    } else {
+        //  console.log('check good!') 
+    }
 
     if (directionOfSandwich === 2) {
-        console.log('start check east')
+        // console.log('start check east')
         if ((column + sandwich) <= numberOfColumns) {
             for (let i = column; i < (sandwich + column); i++) {
                 // console.log('i: ', i)
@@ -694,28 +718,30 @@ function checkComputerStartingSquare(sandwich) {
                 // console.log('arow: ', aRow)
                 // console.log('acol: ', i - 1)
                 if (computerArray[aRow][i - 1] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkComputerStartingSquare(sandwich)
                     break
                 }
             }
         } else {
-            console.log('start check reverse direction')
+            // console.log('start check reverse direction')
             for (let i = column; i > (column - sandwich); i--) {
                 // console.log('i: ', i)
                 // console.log('condition = ', column - sandwich)
                 // console.log('arow: ', aRow)
                 // console.log('acol: ', i - 1)
                 if (computerArray[aRow][i - 1] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkComputerStartingSquare(sandwich)
                     break
                 }
             }
         }
-    } else { console.log('check good!') }
+    } else {
+        // console.log('check good!') 
+    }
 
     if (directionOfSandwich === 4) {
         console.log('start check west')
@@ -726,7 +752,7 @@ function checkComputerStartingSquare(sandwich) {
                 // console.log('arow: ', aRow)
                 // console.log('acol: ', i - 1)
                 if (computerArray[aRow][i - 1] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkComputerStartingSquare(sandwich)
                     break
@@ -740,14 +766,16 @@ function checkComputerStartingSquare(sandwich) {
                 // console.log('arow: ', aRow)
                 // console.log('acol: ', i - 1)
                 if (computerArray[aRow][i - 1] === 1) {
-                    console.log('!!!GET NEW START!!!')
+                    // console.log('!!!GET NEW START!!!')
                     getStartingSquare()
                     checkComputerStartingSquare(sandwich)
                     break
                 }
             }
         }
-    } else { console.log('check good!') }
+    } else {
+        // console.log('check good!')
+    }
 
 
 }
@@ -757,12 +785,12 @@ function compSandwichPlacement(sandwich) {
     // getStartingSquare()
 
     // checkStartingSquare(sandwich)
-    console.log('row = ' + row)
-    console.log('column = ' + column)
-    console.log('direction = ' + directionOfSandwich)
+    // console.log('row = ' + row)
+    // console.log('column = ' + column)
+    // console.log('direction = ' + directionOfSandwich)
 
     if (directionOfSandwich === 1) {
-        console.log('north')
+        // console.log('north')
         if ((row - sandwich) >= 0) {
             for (let i = row; i > (row - sandwich); i--) {
                 square = document.getElementById("c" + i + '-' + column)
@@ -773,7 +801,7 @@ function compSandwichPlacement(sandwich) {
                     // lastDirectionOfSandwich = 1
             }
         } else {
-            console.log('reverse direction')
+            // console.log('reverse direction')
             for (let i = row; i < (sandwich + row); i++) {
                 square = document.getElementById("c" + i + '-' + column)
                 square.innerText = sandwich
@@ -786,7 +814,7 @@ function compSandwichPlacement(sandwich) {
     }
 
     if (directionOfSandwich === 3) {
-        console.log('south')
+        // console.log('south')
         if ((row + sandwich) <= numberOfRows) {
             for (let i = row; i < (row + sandwich); i++) {
                 square = document.getElementById("c" + i + '-' + column)
@@ -797,7 +825,7 @@ function compSandwichPlacement(sandwich) {
                     // lastDirectionOfSandwich = 3
             }
         } else {
-            console.log('reverse direction')
+            // console.log('reverse direction')
             for (let i = row; i > (row - sandwich); i--) {
                 square = document.getElementById("c" + i + '-' + column)
                 square.innerText = sandwich
@@ -810,7 +838,7 @@ function compSandwichPlacement(sandwich) {
     }
 
     if (directionOfSandwich === 2) {
-        console.log('east')
+        // console.log('east')
         if ((column + sandwich) <= numberOfColumns) {
             for (let i = column; i < (sandwich + column); i++) {
                 square = document.getElementById("c" + row + '-' + i)
@@ -821,7 +849,7 @@ function compSandwichPlacement(sandwich) {
                     // lastDirectionOfSandwich = 2
             }
         } else {
-            console.log('reverse direction')
+            // console.log('reverse direction')
             for (let i = column; i > (column - sandwich); i--) {
                 square = document.getElementById("c" + row + '-' + i)
                 square.innerText = sandwich
@@ -834,7 +862,7 @@ function compSandwichPlacement(sandwich) {
     }
 
     if (directionOfSandwich === 4) {
-        console.log('west')
+        // console.log('west')
         if ((column - sandwich) >= 0) {
             for (let i = column; i > (column - sandwich); i--) {
                 square = document.getElementById("c" + row + '-' + i)
@@ -845,7 +873,7 @@ function compSandwichPlacement(sandwich) {
                     // lastDirectionOfSandwich = 4
             }
         } else {
-            console.log('reverse direction')
+            // console.log('reverse direction')
             for (let i = column; i < (sandwich + column); i++) {
                 square = document.getElementById("c" + row + '-' + i)
                 square.innerText = sandwich
@@ -857,7 +885,7 @@ function compSandwichPlacement(sandwich) {
         }
     }
 
-    console.log(computerArray)
+    // console.log(computerArray)
 
 
 }
@@ -893,26 +921,211 @@ function computerSquareChosen(e) {
         console.log('hit')
         turnIndicator.innerText = 'HIT!'
         playerHitLog.push(tempCheckSquare)
+        console.log(playerHitLog)
+        checkPlayerEaten()
     } else {
         console.log('miss')
         turnIndicator.innerText = 'MISS!'
     }
 
-    checkForHamburger()
+
+    checkPlayerEaten()
+        // checkForHamburger()
         // checkForWin()
     setTimeout(computerTurnInit, 2000)
 }
 
-function checkForHamburger() {
-    console.log(playerHitLog)
-    if (playerHitLog.includes('1')) {
-        console.log("hamburger")
-        turnIndicator.innerText = turnName + ' ate a Hamburger!'
+
+function checkPlayerEaten() {
+    console.log('check start')
+    for (let i = 0; i < diffLevel; i++) {
+        console.log('player sandwich array: ' + eatenPlayerSandwichsArray[i])
+        if (eatenPlayerSandwichsArray[i] === false) {
+            // console.log('hih shit')
+            checkSandwiches[i]()
+        }
     }
-    if (playerHitLog.includes('2')) {
-        let findHotDog = playerHitLog.find(element => element === 2)
-        hotDog = playerHitLog.filter(findHotDog)
-        console.log(hotDog)
+}
+
+function checkCompEaten() {
+    for (let i = 0; i < diffLevel; i++) {
+        if (eatenCompSandwichsArray[i] === false) {
+            checkSandwiches[i]()
+        }
+    }
+}
+
+// const checkPlayerSandwiches = [checkForHamburger(), checkForHotDog(), checkForMeatball(), checkForItalian(), checkForPhilly()]
+const checkSandwiches = [checkForHamburger, checkForHotDog, checkForMeatball, checkForItalian, checkForPhilly]
+    // console.log(checkSandwiches[0]())
+
+// checkPlayerSandwiches[0]()
+
+function checkForHamburger() {
+    if (turnName === 'Player') {
+        console.log(playerHitLog)
+        if (playerHitLog.includes('1')) {
+            console.log("hamburger")
+            turnIndicator.innerText = turnName + ' ate a Hamburger!'
+            removeElement = playerHitLog.indexOf('1')
+            playerHitLog.splice(removeElement, 1)
+            eatenPlayerHamburger = true
+        }
+    } else if (turnName === 'Comp') {
+        console.log(compHitLog)
+        if (compHitLog.includes('1')) {
+            console.log("hamburger")
+            turnIndicator.innerText = turnName + ' ate a Hamburger!'
+            removeElement = compHitLog.indexOf('1')
+            compHitLog.splice(removeElement, 1)
+            eatenCompHamburger = true
+        }
+    }
+
+}
+
+function checkForHotDog() {
+    if (turnName === 'Player') {
+        console.log('hotdog check')
+        console.log(playerHitLog)
+        tempLog = []
+        for (let i = 0; i < playerHitLog.length; i++) {
+            console.log('hotdog check huh')
+
+            if (playerHitLog[i] === '2') {
+                console.log('hotdog check huh')
+                tempLog.push(playerHitLog[i])
+            }
+            if (tempLog.length === hotDog) {
+                console.log('You ate a hot dog')
+                turnIndicator.innerText = turnName + ' ate a hot dog!'
+                eatenPlayerHotDog = true
+            }
+            if (eatenPlayerHotDog === true) {
+                for (let i = 0; i < hotDog; i++) {
+                    removeElement = playerHitLog.indexOf('2')
+                    console.log('remove playerhitlog')
+                    playerHitLog.splice(removeElement, 1)
+                }
+            }
+        }
+    } else if (turnName === 'Comp') {
+        tempLog = []
+        for (let i = 0; i < playerHitLog.length; i++) {
+            if (compHitLog[i] === '2') {
+                tempLog.push(compHitLog[i])
+            }
+            if (tempLog.length === hotDog) {
+                console.log('You ate a hot dog')
+                turnIndicator.innerText = turnName + ' ate a hot dog!'
+                eatenCompHotDog = true
+            }
+            if (eatenCompHotDog === true) {
+                for (let i = 0; i < hotDog; i++) {
+                    removeElement = compHitLog.indexOf('2')
+                    compHitLog.splice(removeElement, 1)
+                }
+            }
+        }
+    }
+}
+
+function checkForMeatball() {
+    // check for meatball here
+    if (turnName === 'Player') {
+        tempLog = []
+        for (let i = 0; i < playerHitLog.length; i++) {
+            if (playerHitLog[i] === '3') {
+                tempLog.push(playerHitLog[i])
+            }
+            if (tempLog.length === meatballSub) {
+                console.log('You ate a meatball')
+                turnIndicator.innerText = turnName + ' ate a meatball sub!'
+                eatenPlayerMeatballSub = true
+            }
+            if (eatenPlayerMeatballSub === true) {
+                for (let i = 0; i < meatballSub; i++) {
+                    removeElement = playerHitLog.indexOf('3')
+                    playerHitLog.splice(removeElement, 1)
+                }
+            }
+        }
+    } else if (turnName === 'Comp') {
+        tempLog = []
+        for (let i = 0; i < playerHitLog.length; i++) {
+            if (compHitLog[i] === '3') {
+                tempLog.push(compHitLog[i])
+            }
+            if (tempLog.length === meatballSub) {
+                console.log('You ate a meatball')
+                turnIndicator.innerText = turnName + ' ate a meatball sub!'
+                eatenCompMeatballSub = true
+            }
+            if (eatenCompMeatballSub === true) {
+                for (let i = 0; i < meatballSub; i++) {
+                    removeElement = compHitLog.indexOf('3')
+                    compHitLog.splice(removeElement, 1)
+                }
+            }
+        }
+    }
+}
+
+function checkForItalian() {
+    //check for Italian here
+    if (turnName === 'Player') {
+        tempLog = []
+        for (let i = 0; i < playerHitLog.length; i++) {
+            if (playerHitLog[i] === '4') {
+                tempLog.push(playerHitLog[i])
+            }
+            if (tempLog.length === italianHoagie) {
+                console.log('You ate a hot dog')
+                turnIndicator.innerText = turnName + ' ate an Italian Hoagie!'
+                eatenPlayerItalianHoagie = true
+            }
+        }
+    } else if (turnName === 'Comp') {
+        tempLog = []
+        for (let i = 0; i < playerHitLog.length; i++) {
+            if (compHitLog[i] === '4') {
+                tempLog.push(compHitLog[i])
+            }
+            if (tempLog.length === italianHoagie) {
+                console.log('You ate a hot dog')
+                turnIndicator.innerText = turnName + ' ate an Italian Hoagie!'
+                eatenCompItalianHoagie = true
+            }
+        }
+    }
+}
+
+function checkForPhilly() {
+    // check for philly here
+    if (turnName === 'Player') {
+        tempLog = []
+        for (let i = 0; i < playerHitLog.length; i++) {
+            if (playerHitLog[i] === '5') {
+                tempLog.push(playerHitLog[i])
+            }
+            if (tempLog.length === phillyCheese) {
+                console.log('You ate a philly cheese')
+                turnIndicator.innerText = turnName + ' ate a Philly Cheesesteak!'
+                eatenPlayerPhillyCheese = true
+            }
+        }
+    } else if (turnName === 'Comp') {
+        tempLog = []
+        for (let i = 0; i < playerHitLog.length; i++) {
+            if (compHitLog[i] === '5') {
+                tempLog.push(compHitLog[i])
+            }
+            if (tempLog.length === phillyCheese) {
+                console.log('You ate a philly cheese')
+                turnIndicator.innerText = turnName + ' ate a Philly Cheesesteak!'
+                eatenCompPhillyCheese = true
+            }
+        }
     }
 }
 
@@ -935,11 +1148,12 @@ function computerTurn() {
     if (playerArray[cTempRow - 1][cTempCol - 1] === 1) {
         turnIndicator.innerText = 'Comp HIT!'
         tempSquare.style.backgroundColor = 'red'
-        computerHitLog.push(tempCheckSquare)
+        compHitLog.push(tempCheckSquare)
     } else {
         turnIndicator.innerText = 'Comp Miss'
         tempSquare.style.backgroundColor = 'white'
     }
+    checkCompEaten()
     setTimeout(playerTurn, 2000)
 }
 
