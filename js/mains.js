@@ -114,6 +114,46 @@ exitGame = document.getElementById('exit')
 
 /*-------Functions-------*/
 
+// function init() {
+
+//     welcomeTag1.style.visibility = 'visible'
+//     welcomeTag2.style.visibility = 'visible'
+//     welcomeTag1.innerText = welcomeTagTxt1
+//     welcomeTag2.innerHTML = welcomeTagTxt2
+//     welcomeImg1.appendChild(italianHoagieImg)
+//     body.removeChild(mainGameArea)
+//     body.removeChild(difficultyWindow)
+
+//     body.removeChild(winView)
+
+//     // mainGameArea.style.visibility = 'hidden'
+// }
+
+
+// function goToDeliBoard() {
+//     body.removeChild(deliCounter)
+//     body.appendChild(mainGameArea)
+
+//     mainGameArea.appendChild(welcomeTag1)
+//     mainGameArea.appendChild(difficultyWindow)
+//     welcomeTag1.innerText = mainGameHeaderTxt
+//         // deliCounter.style.visibility = "hidden"
+//     welcomeTag1.style.visibility = 'visible'
+//     welcomeTag2.style.visibility = 'hidden'
+//     welcomeImg1.style.visibility = 'hidden'
+//     mainGameArea.style.visibility = 'visible'
+//     deliCounter.style.visibility = 'hidden'
+
+//     // createGameBoards()
+//     // compSandwichPlacement(phillyCheese)
+//     // compSandwichPlacement(italianHoagie)
+//     // compSandwichPlacement(meatballSub)
+//     // compSandwichPlacement(hotDog)
+//     // compSandwichPlacement(hamBurger)
+//     // playerSandwichPlacement(phillyCheese)
+//     // compute
+// }
+
 function exitGamePlay() {
     window.close()
 }
@@ -138,6 +178,7 @@ function createGameBoards(event) {
     mainGameArea.removeChild(difficultyWindow)
 
     playerArray = new Array()
+    playerArray = []
     for (let i = 0; i < numberOfRows; i++) {
         playerArray[i] = new Array()
         for (let k = 0; k < numberOfColumns; k++) {
@@ -165,6 +206,7 @@ function createGameBoards(event) {
     }
 
     computerArray = new Array()
+    computerArray = []
     for (let i = 0; i < numberOfRows; i++) {
         computerArray[i] = new Array()
         for (let k = 0; k < numberOfColumns; k++) {
@@ -191,22 +233,9 @@ function createGameBoards(event) {
             computerArray[i].push(-1)
         }
     }
-    // computerSquares = document.getElementsByClassName('computer-square')
-    // console.log(computerSquares)
-    // const computerSquareChosen = e => {
-    //     console.log(e.target.id); // Get ID of Clicked Element
-    // }
 
-    // for (let square of computerSquares) {
-    //     square.addEventListener("click", computerSquareChosen);
-    // }
-    // computerSquares = document.getElementsByClassName('computer-square')
-    // playerSquares = document.getElementsByClassName('player-square')
-    // console.log(computerSquares)
 
-    // for (let square of computerSquares) {
-    //     square.addEventListener("click", computerSquareChosen);
-    // }
+
 }
 
 
@@ -218,6 +247,7 @@ function updateSandwichImg() {
 }
 
 function playerOrder() {
+    console.log('starting game')
     for (let i = 0; i < diffLevel; i++) {
         getStartingSquare()
         checkPlayerStartingSquare(sandwichesArray[i])
@@ -400,9 +430,9 @@ function playerSandwichPlacement(sandwich) {
     // getStartingSquare()
 
     // checkStartingSquare(sandwich)
-    // console.log('row = ' + row)
-    // console.log('column = ' + column)
-    // console.log('direction = ' + directionOfSandwich)
+    console.log('row = ' + row)
+    console.log('column = ' + column)
+    console.log('direction = ' + directionOfSandwich)
 
     if (directionOfSandwich === 1) {
         // console.log('north')
@@ -951,6 +981,9 @@ function checkPlayWin() {
     console.log('player null count')
     console.log(playerNullCount)
     if (playerNullCount === diffLevel) {
+        // resultsDisplay = document.createElement('div')
+        // resultsDisplay.setAttribute('id', 'result')
+
         console.log('player wins')
             // turnIndicator.innerText = 'Player Wins!'
             // mainGameArea.appendChild(resultsDisplay)
@@ -1342,6 +1375,7 @@ function goToDeliBoard() {
 }
 
 function init() {
+
     welcomeTag1.style.visibility = 'visible'
     welcomeTag2.style.visibility = 'visible'
     welcomeTag1.innerText = welcomeTagTxt1
@@ -1356,20 +1390,53 @@ function init() {
 }
 
 function reStart() {
+
+    playerNullCount = 0
+    compNullCount = 0
+    clearBoards()
+    body.appendChild(deliCounter)
+    body.removeChild(mainGameArea)
+    mainGameArea.removeChild(winView)
+        // body.removeChild(winView)
     welcomeTag1.style.visibility = 'visible'
     welcomeTag2.style.visibility = 'visible'
     welcomeTag1.innerText = welcomeTagTxt1
     welcomeTag2.innerHTML = welcomeTagTxt2
     welcomeImg1.appendChild(italianHoagieImg)
-    body.removeChild(mainGameArea)
-    body.removeChild(difficultyWindow)
-
-    body.removeChild(winView)
+        // body.removeChild(difficultyWindow)
+        // body.removeChild(mainGameArea)
+        // body.removeChild(difficultyWindow)
+    body.appendChild(deliCounter)
 
     // mainGameArea.style.visibility = 'hidden'
+
     goToDeliBoard()
-    playerOrder()
+
 }
+
+function resetWin() {
+
+}
+
+function clearBoards() {
+    cSquare = document.getElementsByClassName('computer-square')
+    for (let i = 0; i < numberOfColumns * numberOfRows; i++) {
+        computerBoard.removeChild(cSquare[0])
+        console.log(cSquare)
+    }
+    pSquare = document.getElementsByClassName('player-square')
+    console.log(pSquare)
+    for (let i = 0; i < (numberOfColumns * numberOfRows); i++) {
+        playerBoard.removeChild(pSquare[0])
+    }
+
+}
+
+
+
+
+
+
 
 init()
 
