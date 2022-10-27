@@ -32,6 +32,9 @@ phillyCheeseImg.src = "images/phillycheese.png"
 let winImageImg = new Image(388, 509)
 winImageImg.src = 'images/winimage.png'
 
+let tomatoImg = new Image(50, 50)
+tomatoImg.src = 'images/tomato.png'
+
 
 //sounds
 // const eatSound,
@@ -159,6 +162,7 @@ function exitGamePlay() {
 }
 
 function createGameBoards(event) {
+    mainGameArea.appendChild(orderSandwiches)
     if (event.target.id === 'easy') {
         numberOfRows = 6
         numberOfColumns = 6
@@ -244,6 +248,10 @@ function updateSandwichImg() {
         gameInfoDisp.appendChild(sandwichImgArray[i])
             // console.log('getting hungry')
     }
+    tomatoDiv = document.createElement('div')
+    tomatoDiv.setAttribute('id', 'tomato')
+    tomatoDiv.appendChild(tomatoImg)
+    computerBoard.appendChild(tomatoDiv)
 }
 
 function playerOrder() {
@@ -252,6 +260,7 @@ function playerOrder() {
         getStartingSquare()
         checkPlayerStartingSquare(sandwichesArray[i])
         playerSandwichPlacement(sandwichesArray[i])
+
     }
     for (let i = 0; i < diffLevel; i++) {
         getStartingSquare()
@@ -260,6 +269,7 @@ function playerOrder() {
     }
 
     startGame()
+    mainGameArea.removeChild(orderSandwiches)
 
 
 }
@@ -836,7 +846,7 @@ function compSandwichPlacement(sandwich) {
             for (let i = row; i > (row - sandwich); i--) {
                 square = document.getElementById("c" + i + '-' + column)
                 square.innerText = sandwich
-                square.style.backgroundColor = 'red'
+                    // square.style.backgroundColor = 'red'
                     // console.log('Array: ' + playerArray[aRow][i - 1])
                 computerArray[i - 1][aCol] = 1
                     // lastDirectionOfSandwich = 1
@@ -846,7 +856,7 @@ function compSandwichPlacement(sandwich) {
             for (let i = row; i < (sandwich + row); i++) {
                 square = document.getElementById("c" + i + '-' + column)
                 square.innerText = sandwich
-                square.style.backgroundColor = 'red'
+                    // square.style.backgroundColor = 'red'
                     // console.log('Array: ' + computerArray[aRow][i - 1])
                 computerArray[i - 1][aCol] = 1
                     // lastDirectionOfSandwich = 3
@@ -860,7 +870,7 @@ function compSandwichPlacement(sandwich) {
             for (let i = row; i < (row + sandwich); i++) {
                 square = document.getElementById("c" + i + '-' + column)
                 square.innerText = sandwich
-                square.style.backgroundColor = 'red'
+                    // square.style.backgroundColor = 'red'
                     // console.log('Array: ' + computerArray[aRow][i - 1])
                 computerArray[i - 1][aCol] = 1
                     // lastDirectionOfSandwich = 3
@@ -870,7 +880,7 @@ function compSandwichPlacement(sandwich) {
             for (let i = row; i > (row - sandwich); i--) {
                 square = document.getElementById("c" + i + '-' + column)
                 square.innerText = sandwich
-                square.style.backgroundColor = 'red'
+                    // square.style.backgroundColor = 'red'
                     // console.log('Array: ' + computerArray[aRow][i - 1])
                 computerArray[i - 1][aCol] = 1
                     // lastDirectionOfSandwich = 1
@@ -884,7 +894,7 @@ function compSandwichPlacement(sandwich) {
             for (let i = column; i < (sandwich + column); i++) {
                 square = document.getElementById("c" + row + '-' + i)
                 square.innerText = sandwich
-                square.style.backgroundColor = 'red'
+                    // square.style.backgroundColor = 'red'
                     // console.log('Array: ' + computerArray[aRow][i - 1])
                 computerArray[aRow][i - 1] = 1
                     // lastDirectionOfSandwich = 2
@@ -894,7 +904,7 @@ function compSandwichPlacement(sandwich) {
             for (let i = column; i > (column - sandwich); i--) {
                 square = document.getElementById("c" + row + '-' + i)
                 square.innerText = sandwich
-                square.style.backgroundColor = 'red'
+                    // square.style.backgroundColor = 'red'
                     // console.log('Array: ' + computerArray[aRow][i - 1])
                 computerArray[aRow][i - 1] = 1
                     // lastDirectionOfSandwich = 4
@@ -908,7 +918,7 @@ function compSandwichPlacement(sandwich) {
             for (let i = column; i > (column - sandwich); i--) {
                 square = document.getElementById("c" + row + '-' + i)
                 square.innerText = sandwich
-                square.style.backgroundColor = 'red'
+                    // square.style.backgroundColor = 'red'
                     // console.log('Array: ' + computerArray[aRow][i - 1])
                 computerArray[aRow][i - 1] = 1
                     // lastDirectionOfSandwich = 4
@@ -918,7 +928,7 @@ function compSandwichPlacement(sandwich) {
             for (let i = column; i < (sandwich + column); i++) {
                 square = document.getElementById("c" + row + '-' + i)
                 square.innerText = sandwich
-                square.style.backgroundColor = 'red'
+                    // square.style.backgroundColor = 'red'
                     // console.log('Array: ' + computerArray[aRow][i - 1])
                 computerArray[aRow][i - 1] = 1
                     // lastDirectionOfSandwich = 2
@@ -946,11 +956,11 @@ function startGame() {
 function computerSquareChosen(e) {
     turnName = "Player"
     console.log(e.target.id)
-    e.target.style.backgroundColor = "rgb(255, 255, 0)"
-        // for (let square of computerSquares) {
-        //     console.log('is this working?')
-        //     square.removeEventListener("click", computerSquareChosen, true);
-        // }
+
+    // for (let square of computerSquares) {
+    //     console.log('is this working?')
+    //     square.removeEventListener("click", computerSquareChosen, true);
+    // }
     tempCheckSquare = e.target.innerText
     tempSquare = e.target.id
     tempSquare = tempSquare.slice(1)
@@ -961,12 +971,14 @@ function computerSquareChosen(e) {
     if (computerArray[tempRow - 1][tempCol - 1] === 1) {
         console.log('hit')
         turnIndicator.innerText = 'HIT!'
+        e.target.style.backgroundColor = "rgb(255, 0, 0)"
         playerHitLog.push(tempCheckSquare)
         console.log(playerHitLog)
         checkPlayerEaten()
         checkPlayWin()
     } else {
         console.log('miss')
+        e.target.style.backgroundColor = "white"
         turnIndicator.innerText = 'MISS!'
     }
 
@@ -1353,6 +1365,7 @@ function playerTurn() {
 function goToDeliBoard() {
     body.removeChild(deliCounter)
     body.appendChild(mainGameArea)
+        // mainGameArea.appendChild(orderSandwiches)
 
     mainGameArea.appendChild(welcomeTag1)
     mainGameArea.appendChild(difficultyWindow)
@@ -1381,6 +1394,7 @@ function init() {
     welcomeTag1.innerText = welcomeTagTxt1
     welcomeTag2.innerHTML = welcomeTagTxt2
     welcomeImg1.appendChild(italianHoagieImg)
+    mainGameArea.removeChild(orderSandwiches)
     body.removeChild(mainGameArea)
     body.removeChild(difficultyWindow)
 
@@ -1390,7 +1404,8 @@ function init() {
 }
 
 function reStart() {
-
+    // mainGameArea.appendChild(orderSandwiches)
+    turnIndicator.innerText = ''
     playerNullCount = 0
     compNullCount = 0
     clearBoards()
