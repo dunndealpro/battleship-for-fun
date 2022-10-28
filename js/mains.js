@@ -250,8 +250,8 @@ function updateSandwichImg() {
     }
     tomatoDiv = document.createElement('div')
     tomatoDiv.setAttribute('id', 'tomato')
-    tomatoDiv.appendChild(tomatoImg)
-    computerBoard.appendChild(tomatoDiv)
+        // tomatoDiv.appendChild(tomatoImg)
+        // computerBoard.appendChild(tomatoDiv)
 }
 
 function playerOrder() {
@@ -968,10 +968,12 @@ function computerSquareChosen(e) {
     console.log(tempSquare)
     tempRow = tempSquare[0]
     tempCol = tempSquare[1]
+    flyTomato(e)
     if (computerArray[tempRow - 1][tempCol - 1] === 1) {
         console.log('hit')
         turnIndicator.innerText = 'HIT!'
-        e.target.style.backgroundColor = "rgb(255, 0, 0)"
+
+
         playerHitLog.push(tempCheckSquare)
         console.log(playerHitLog)
         checkPlayerEaten()
@@ -986,7 +988,37 @@ function computerSquareChosen(e) {
     // checkPlayerEaten()
     // checkForHamburger()
     // checkForWin()
-    setTimeout(computerTurnInit, 2000)
+    setTimeout(computerTurnInit, 4000)
+}
+
+function flyTomato(e) {
+    e.target.style.backgroundColor = "rgb(255, 0, 0)"
+    tempTom = document.createElement('div')
+    tempTom.setAttribute('class', 'initial-state')
+    tempTom.style.opacity = '0.0'
+    tempTom.appendChild(tomatoImg)
+    mainGameArea.appendChild(tempTom)
+
+
+    tempInfo = e.target
+    tempInfo = tempInfo.getBoundingClientRect()
+    landingX = tempInfo.x
+    landingY = tempInfo.y
+    console.log(landingX)
+
+    console.log(tempInfo)
+        // tempTom.setAttribute('class', 't-ani')
+    root = document.documentElement;
+    offsetX = -90
+    offsetY = -100
+    tWidth = window.innerWidth - landingX + offsetX
+    tHeight = window.innerHeight - landingY + offsetY
+    root.style.setProperty('--landingX', tWidth + "px")
+    root.style.setProperty('--landingY', tHeight + "px")
+    root.style.setProperty('--landingX2', tWidth / 2 + "px")
+    root.style.setProperty('--landingY2', tHeight / 2 + "px")
+    console.log(window.innerWidth), console.log(window.innerHeight)
+    console.log(root)
 }
 
 function checkPlayWin() {
