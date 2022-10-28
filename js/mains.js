@@ -437,217 +437,80 @@ function checkPlayerStartingSquare(sandwich) {
 }
 
 
-function playerSandwichPlacement(sandwich) {
-
-    // getStartingSquare()
-
-    // checkStartingSquare(sandwich)
-    console.log('row = ' + row)
-    console.log('column = ' + column)
-    console.log('direction = ' + directionOfSandwich)
-
-    if (directionOfSandwich === 1) {
-        // console.log('north')
-        if ((row - sandwich) >= 0) {
-            for (let i = row; i > (row - sandwich); i--) {
-                square = document.getElementById('p' + i + '-' + column)
-                square.innerText = sandwich
-                square.style.backgroundColor = 'rgba(0,0,0,0)'
-                    // console.log('Array: ' + playerArray[aRow][i - 1])
-                playerArray[i - 1][aCol] = 1
-                    // lastDirectionOfSandwich = 1
-            }
-        } else {
-            // console.log('reverse direction')
-            for (let i = row; i < (sandwich + row); i++) {
-                square = document.getElementById('p' + i + '-' + column)
-                square.innerText = sandwich
-                square.style.backgroundColor = 'rgba(0,0,0,0)'
-                    // console.log('Array: ' + playerArray[aRow][i - 1])
-                playerArray[i - 1][aCol] = 1
-                    // lastDirectionOfSandwich = 3
-            }
-        }
-    }
-
-    if (directionOfSandwich === 3) {
-        // console.log('south')
-        if ((row + sandwich) <= numberOfRows) {
-            for (let i = row; i < (row + sandwich); i++) {
-                square = document.getElementById('p' + i + '-' + column)
-                square.innerText = sandwich
-                square.style.backgroundColor = 'rgba(0,0,0,0)'
-                    // console.log('Array: ' + playerArray[aRow][i - 1])
-                playerArray[i - 1][aCol] = 1
-                    // lastDirectionOfSandwich = 3
-            }
-        } else {
-            // console.log('reverse direction')
-            for (let i = row; i > (row - sandwich); i--) {
-                square = document.getElementById('p' + i + '-' + column)
-                square.innerText = sandwich
-                square.style.backgroundColor = 'rgba(0,0,0,0)'
-                    // console.log('Array: ' + playerArray[aRow][i - 1])
-                playerArray[i - 1][aCol] = 1
-                    // lastDirectionOfSandwich = 1
-            }
-        }
-    }
-
-    if (directionOfSandwich === 2) {
-        // console.log('east')
-        if ((column + sandwich) <= numberOfColumns) {
-            for (let i = column; i < (sandwich + column); i++) {
-                square = document.getElementById('p' + row + '-' + i)
-                square.innerText = sandwich
-                square.style.backgroundColor = 'rgba(0,0,0,0)'
-                    // console.log('Array: ' + playerArray[aRow][i - 1])
-                playerArray[aRow][i - 1] = 1
-                    // lastDirectionOfSandwich = 2
-            }
-        } else {
-            // console.log('reverse direction')
-            for (let i = column; i > (column - sandwich); i--) {
-                square = document.getElementById('p' + row + '-' + i)
-                square.innerText = sandwich
-                square.style.backgroundColor = 'rgba(0,0,0,0)'
-                    // console.log('Array: ' + playerArray[aRow][i - 1])
-                playerArray[aRow][i - 1] = 1
-                    // lastDirectionOfSandwich = 4
-            }
-        }
-    }
-
-    if (directionOfSandwich === 4) {
-        // console.log('west')
-        if ((column - sandwich) >= 0) {
-            for (let i = column; i > (column - sandwich); i--) {
-                square = document.getElementById('p' + row + '-' + i)
-                square.innerText = sandwich
-                square.style.backgroundColor = 'rgba(0,0,0,0)'
-                    // console.log('Array: ' + playerArray[aRow][i - 1])
-                playerArray[aRow][i - 1] = 1
-                    // lastDirectionOfSandwich = 4
-            }
-        } else {
-            // console.log('reverse direction')
-            for (let i = column; i < (sandwich + column); i++) {
-                square = document.getElementById('p' + row + '-' + i)
-                square.innerText = sandwich
-                square.style.backgroundColor = 'rgba(0,0,0,0)'
-                    // console.log('Array: ' + playerArray[aRow][i - 1])
-                playerArray[aRow][i - 1] = 1
-                    // lastDirectionOfSandwich = 2
-            }
-        }
-    }
-
-    // console.log(playerArray)
-}
-
-/*with image placement*/
 // function playerSandwichPlacement(sandwich) {
 
+//     // getStartingSquare()
+
+//     // checkStartingSquare(sandwich)
 //     console.log('row = ' + row)
 //     console.log('column = ' + column)
 //     console.log('direction = ' + directionOfSandwich)
 
 //     if (directionOfSandwich === 1) {
-//         console.log('north')
+//         // console.log('north')
 //         if ((row - sandwich) >= 0) {
 //             for (let i = row; i > (row - sandwich); i--) {
 //                 square = document.getElementById('p' + i + '-' + column)
 //                 square.innerText = sandwich
-//                 square.style.backgroundColor = 'rgba(255,0,0,0)'
-//                     // square.appendChild(sandwichImgArray[sandwich - 1])
-//                     // square.style.transform = 'rotate(90deg)'
-//                     // square.style.zIndex = "8"
+//                 square.style.backgroundColor = 'rgba(0,0,0,0)'
 //                     // console.log('Array: ' + playerArray[aRow][i - 1])
 //                 playerArray[i - 1][aCol] = 1
 //                     // lastDirectionOfSandwich = 1
-//                     // if (sandwich === 1) {
-//                     //     square.style.transform = 'rotate(-90deg)'
-//                     // }
-
 //             }
 //         } else {
-//             console.log('reverse direction')
+//             // console.log('reverse direction')
 //             for (let i = row; i < (sandwich + row); i++) {
 //                 square = document.getElementById('p' + i + '-' + column)
 //                 square.innerText = sandwich
-//                 square.style.backgroundColor = 'rgba(255,0,0,0)'
-//                     // square.appendChild(sandwichImgArray[sandwich - 1])
-//                     // square.style.transform = 'rotate(-90deg)'
-//                     // square.style.zIndex = "8"
+//                 square.style.backgroundColor = 'rgba(0,0,0,0)'
 //                     // console.log('Array: ' + playerArray[aRow][i - 1])
 //                 playerArray[i - 1][aCol] = 1
 //                     // lastDirectionOfSandwich = 3
-//                     // if (sandwich === 1) {
-//                     //     square.style.transform = 'rotate(90deg)'
-//                     // }
-
 //             }
 //         }
 //     }
 
 //     if (directionOfSandwich === 3) {
-//         console.log('south')
+//         // console.log('south')
 //         if ((row + sandwich) <= numberOfRows) {
 //             for (let i = row; i < (row + sandwich); i++) {
 //                 square = document.getElementById('p' + i + '-' + column)
 //                 square.innerText = sandwich
-//                 square.style.backgroundColor = 'rgba(255,0,0,0)'
-//                     // square.appendChild(sandwichImgArray[sandwich - 1])
-//                     // square.style.transform = 'rotate(-90deg)'
-//                     // square.style.zIndex = "8"
+//                 square.style.backgroundColor = 'rgba(0,0,0,0)'
 //                     // console.log('Array: ' + playerArray[aRow][i - 1])
 //                 playerArray[i - 1][aCol] = 1
 //                     // lastDirectionOfSandwich = 3
-//                     // if (sandwich === 1) {
-//                     //     square.style.transform = 'rotate(90deg)'
-//                     // }
 //             }
 //         } else {
-//             console.log('reverse direction')
+//             // console.log('reverse direction')
 //             for (let i = row; i > (row - sandwich); i--) {
 //                 square = document.getElementById('p' + i + '-' + column)
 //                 square.innerText = sandwich
-//                 square.style.backgroundColor = 'rgba(255,0,0,0)'
-//                     // square.appendChild(sandwichImgArray[sandwich - 1])
-//                     // square.style.transform = 'rotate(90deg)'
-//                     // square.style.zIndex = "8"
+//                 square.style.backgroundColor = 'rgba(0,0,0,0)'
 //                     // console.log('Array: ' + playerArray[aRow][i - 1])
 //                 playerArray[i - 1][aCol] = 1
 //                     // lastDirectionOfSandwich = 1
-//                     // if (sandwich === 1) {
-//                     //     square.style.transform = 'rotate(-90deg)'
-//                     // }
 //             }
 //         }
 //     }
 
 //     if (directionOfSandwich === 2) {
-//         console.log('east')
+//         // console.log('east')
 //         if ((column + sandwich) <= numberOfColumns) {
 //             for (let i = column; i < (sandwich + column); i++) {
 //                 square = document.getElementById('p' + row + '-' + i)
 //                 square.innerText = sandwich
-//                     // square.style.backgroundColor = 'rgba(255,0,0,0)'
-//                     // square.appendChild(sandwichImgArray[sandwich - 1])
-//                     // square.style.transform = 'scaleX(-1)'
-//                     // square.style.zIndex = "8"
+//                 square.style.backgroundColor = 'rgba(0,0,0,0)'
 //                     // console.log('Array: ' + playerArray[aRow][i - 1])
 //                 playerArray[aRow][i - 1] = 1
 //                     // lastDirectionOfSandwich = 2
 //             }
 //         } else {
-//             console.log('reverse direction')
+//             // console.log('reverse direction')
 //             for (let i = column; i > (column - sandwich); i--) {
 //                 square = document.getElementById('p' + row + '-' + i)
 //                 square.innerText = sandwich
-//                     // square.style.backgroundColor = 'rgba(255,0,0,0)'
-//                     // square.appendChild(sandwichImgArray[sandwich - 1])
-//                     // square.style.zIndex = "8"
+//                 square.style.backgroundColor = 'rgba(0,0,0,0)'
 //                     // console.log('Array: ' + playerArray[aRow][i - 1])
 //                 playerArray[aRow][i - 1] = 1
 //                     // lastDirectionOfSandwich = 4
@@ -656,27 +519,22 @@ function playerSandwichPlacement(sandwich) {
 //     }
 
 //     if (directionOfSandwich === 4) {
-//         console.log('west')
+//         // console.log('west')
 //         if ((column - sandwich) >= 0) {
 //             for (let i = column; i > (column - sandwich); i--) {
 //                 square = document.getElementById('p' + row + '-' + i)
 //                 square.innerText = sandwich
-//                     // square.style.backgroundColor = 'rgba(255,0,0,0)'
-//                     // square.appendChild(sandwichImgArray[sandwich - 1])
-//                     // square.style.zIndex = "8"
+//                 square.style.backgroundColor = 'rgba(0,0,0,0)'
 //                     // console.log('Array: ' + playerArray[aRow][i - 1])
 //                 playerArray[aRow][i - 1] = 1
 //                     // lastDirectionOfSandwich = 4
 //             }
 //         } else {
-//             console.log('reverse direction')
+//             // console.log('reverse direction')
 //             for (let i = column; i < (sandwich + column); i++) {
 //                 square = document.getElementById('p' + row + '-' + i)
 //                 square.innerText = sandwich
-//                 square.style.backgroundColor = 'rgba(255,0,0,0)'
-//                     // square.appendChild(sandwichImgArray[sandwich - 1])
-//                     // square.style.transform = 'scaleX(-1)'
-//                     // square.style.zIndex = "8"
+//                 square.style.backgroundColor = 'rgba(0,0,0,0)'
 //                     // console.log('Array: ' + playerArray[aRow][i - 1])
 //                 playerArray[aRow][i - 1] = 1
 //                     // lastDirectionOfSandwich = 2
@@ -684,8 +542,152 @@ function playerSandwichPlacement(sandwich) {
 //         }
 //     }
 
-//     console.log(playerArray)
+//     // console.log(playerArray)
 // }
+
+/*with image placement*/
+function playerSandwichPlacement(sandwich) {
+
+    console.log('row = ' + row)
+    console.log('column = ' + column)
+    console.log('direction = ' + directionOfSandwich)
+
+    if (directionOfSandwich === 1) {
+        console.log('north')
+        if ((row - sandwich) >= 0) {
+            for (let i = row; i > (row - sandwich); i--) {
+                square = document.getElementById('p' + i + '-' + column)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'rgba(255,0,0,0)'
+
+                console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[i - 1][aCol] = 1
+                lastDirectionOfSandwich = 1
+                if (sandwich === 1) {
+                    square.style.transform = 'rotate(-90deg)'
+                }
+                square.appendChild(sandwichImgArray[sandwich - 1])
+                square.style.transform = 'rotate(90deg)'
+                square.style.zIndex = "8"
+
+            }
+        } else {
+            console.log('reverse direction')
+            for (let i = row; i < (sandwich + row); i++) {
+                square = document.getElementById('p' + i + '-' + column)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'rgba(255,0,0,0)'
+
+                console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[i - 1][aCol] = 1
+                lastDirectionOfSandwich = 3
+                if (sandwich === 1) {
+                    square.style.transform = 'rotate(90deg)'
+                }
+
+            }
+            square.appendChild(sandwichImgArray[sandwich - 1])
+            square.style.transform = 'rotate(-90deg)'
+            square.style.zIndex = "8"
+        }
+    }
+
+    if (directionOfSandwich === 3) {
+        console.log('south')
+        if ((row + sandwich) <= numberOfRows) {
+            for (let i = row; i < (row + sandwich); i++) {
+                square = document.getElementById('p' + i + '-' + column)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'rgba(255,0,0,0)'
+                square.appendChild(sandwichImgArray[sandwich - 1])
+                square.style.transform = 'rotate(-90deg)'
+                square.style.zIndex = "8"
+                console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[i - 1][aCol] = 1
+                lastDirectionOfSandwich = 3
+                if (sandwich === 1) {
+                    square.style.transform = 'rotate(90deg)'
+                }
+            }
+        } else {
+            console.log('reverse direction')
+            for (let i = row; i > (row - sandwich); i--) {
+                square = document.getElementById('p' + i + '-' + column)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'rgba(255,0,0,0)'
+                square.appendChild(sandwichImgArray[sandwich - 1])
+                square.style.transform = 'rotate(90deg)'
+                square.style.zIndex = "8"
+                console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[i - 1][aCol] = 1
+                lastDirectionOfSandwich = 1
+                if (sandwich === 1) {
+                    square.style.transform = 'rotate(-90deg)'
+                }
+            }
+        }
+    }
+
+    if (directionOfSandwich === 2) {
+        console.log('east')
+        if ((column + sandwich) <= numberOfColumns) {
+            for (let i = column; i < (sandwich + column); i++) {
+                square = document.getElementById('p' + row + '-' + i)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'rgba(255,0,0,0)'
+                square.appendChild(sandwichImgArray[sandwich - 1])
+                square.style.transform = 'scaleX(-1)'
+                square.style.zIndex = "8"
+                console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[aRow][i - 1] = 1
+                    // lastDirectionOfSandwich = 2
+            }
+        } else {
+            console.log('reverse direction')
+            for (let i = column; i > (column - sandwich); i--) {
+                square = document.getElementById('p' + row + '-' + i)
+                    // square.innerText = sandwich
+                    //     // square.style.backgroundColor = 'rgba(255,0,0,0)'
+                    //     // square.appendChild(sandwichImgArray[sandwich - 1])
+                    //     // square.style.zIndex = "8"
+                    //     // console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[aRow][i - 1] = 1
+                    // lastDirectionOfSandwich = 4
+            }
+        }
+    }
+
+    if (directionOfSandwich === 4) {
+        console.log('west')
+        if ((column - sandwich) >= 0) {
+            for (let i = column; i > (column - sandwich); i--) {
+                square = document.getElementById('p' + row + '-' + i)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'rgba(255,0,0,0)'
+                square.appendChild(sandwichImgArray[sandwich - 1])
+                square.style.zIndex = "8"
+                console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[aRow][i - 1] = 1
+                    // lastDirectionOfSandwich = 4
+            }
+        } else {
+            console.log('reverse direction')
+            for (let i = column; i < (sandwich + column); i++) {
+                square = document.getElementById('p' + row + '-' + i)
+                square.innerText = sandwich
+                square.style.backgroundColor = 'rgba(255,0,0,0)'
+                square.appendChild(sandwichImgArray[sandwich - 1])
+                square.style.transform = 'scaleX(-1)'
+                square.style.zIndex = "8"
+                console.log('Array: ' + playerArray[aRow][i - 1])
+                playerArray[aRow][i - 1] = 1
+                    // lastDirectionOfSandwich = 2
+            }
+        }
+    }
+
+    console.log(playerArray)
+}
 
 function checkComputerStartingSquare(sandwich) {
     // console.log('checking sandwich: ', sandwich)
@@ -1052,7 +1054,10 @@ function flyTomatoP(e) {
     tempTom.style.opacity = '0.0'
     tempTom.appendChild(tomatoImg)
     mainGameArea.appendChild(tempTom)
-
+    let audio = new Audio('soundefx/TunePocket-Funny-Splat-Whoosh-Preview.mp3');
+    setTimeout(() => {
+        audio.play()
+    }, 2000);
 
     tempInfo = e.target
     tempInfo = tempInfo.getBoundingClientRect()
@@ -1082,6 +1087,10 @@ function flyTomatoC() {
     tempTom.style.opacity = '0.0'
     tempTom.appendChild(tomatoImg)
     mainGameArea.appendChild(tempTom)
+    let audio = new Audio('soundefx/TunePocket-Funny-Splat-Whoosh-Preview.mp3');
+    setTimeout(() => {
+        audio.play()
+    }, 2000);
 
 
     tempInfoC = tempSquareC
@@ -1160,23 +1169,34 @@ function checkPlayerEaten() {
 }
 
 function checkCompEaten() {
-    let compNullCount = 0
+    console.log('player comp start')
+
     for (let i = 0; i < diffLevel; i++) {
+        console.log(sandwichesArray[i])
+        console.log('player sandwich array: ' + eatenCompSandwichsArray[i])
         if (eatenCompSandwichsArray[i] === false) {
+            console.log('hih shit')
             checkSandwiches[i]()
         }
     }
-    for (let i = 0; i < diffLevel; i++) {
-        console.log('start counting nulls')
-        if (eatenCompSandwichsArray[i] === null) {
-            compNullCount += 1
-        }
 
-    }
+    // let compNullCount = 0
+    // for (let i = 0; i < diffLevel; i++) {
+    //     if (eatenCompSandwichsArray[i] === false) {
+    //         checkSandwiches[i]()
+    //     }
+    // }
+    // for (let i = 0; i < diffLevel; i++) {
+    //     console.log('start counting nulls')
+    //     if (eatenCompSandwichsArray[i] === null) {
+    //         compNullCount += 1
+    //     }
 
-    if (compNullCount === diffLevel) {
-        turnIndicator.innerText = 'Comp Wins!'
-    }
+    // }
+
+    // if (compNullCount === diffLevel) {
+    //     turnIndicator.innerText = 'Comp Wins!'
+    // }
 }
 
 // const checkPlayerSandwiches = [checkForHamburger(), checkForHotDog(), checkForMeatball(), checkForItalian(), checkForPhilly()]
