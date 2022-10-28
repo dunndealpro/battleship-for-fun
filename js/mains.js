@@ -83,7 +83,9 @@ let playerHits,
     compNullCount = 0,
     firstSquare = [],
     playerHitLog = [],
-    compHitLog = [];
+    compHitLog = [],
+    tempSquareC;
+let flyWait = 3000 //wait time in milliseconds
 
 /*-----Variable Arrays------*/
 const sandwichesArray = [hamBurger, hotDog, meatballSub, italianHoagie, phillyCheese]
@@ -954,6 +956,7 @@ function startGame() {
 }
 
 function computerSquareChosen(e) {
+
     turnName = "Player"
     console.log(e.target.id)
 
@@ -968,31 +971,82 @@ function computerSquareChosen(e) {
     console.log(tempSquare)
     tempRow = tempSquare[0]
     tempCol = tempSquare[1]
-    flyTomato(e)
+    flyTomatoP(e)
     if (computerArray[tempRow - 1][tempCol - 1] === 1) {
-        console.log('hit')
-        turnIndicator.innerText = 'HIT!'
+        setTimeout(() => {
+            e.target.style.backgroundColor = "rgb(255, 0, 0)"
+            console.log('hit')
+            turnIndicator.innerText = 'HIT!'
+            playerHitLog.push(tempCheckSquare)
+            console.log(playerHitLog)
+            checkPlayerEaten()
+            checkPlayWin()
+            setTimeout(computerTurnInit, 3000)
+        }, flyWait);
 
-
-        playerHitLog.push(tempCheckSquare)
-        console.log(playerHitLog)
-        checkPlayerEaten()
-        checkPlayWin()
     } else {
-        console.log('miss')
-        e.target.style.backgroundColor = "white"
-        turnIndicator.innerText = 'MISS!'
+        setTimeout(() => {
+            console.log('miss')
+            e.target.style.backgroundColor = "white"
+            turnIndicator.innerText = 'MISS!'
+            setTimeout(computerTurnInit, 3000)
+        }, flyWait);
     }
 
 
     // checkPlayerEaten()
     // checkForHamburger()
     // checkForWin()
-    setTimeout(computerTurnInit, 4000)
+
 }
 
-function flyTomato(e) {
-    e.target.style.backgroundColor = "rgb(255, 0, 0)"
+function computerTurnInit() {
+    turnIndicator.innerText = 'Comp Turn'
+        // setTimeout(computerTurn, 1000)
+    computerTurn()
+}
+
+function computerTurn() {
+    turnName = "Comp"
+    console.log('computer turn')
+    cTempRow = 1 + Math.floor(Math.random() * (numberOfRows - 1 + 1))
+    cTempCol = 1 + Math.floor(Math.random() * (numberOfColumns - 1 + 1))
+    console.log(cTempRow), console.log(cTempCol)
+    console.log(('p' + cTempRow + '-' + cTempCol))
+    tempSquareC = document.getElementById('p' + cTempRow + '-' + cTempCol)
+    console.log(tempSquareC)
+    console.log(tempSquareC.x)
+    flyTomatoC()
+    if (playerArray[cTempRow - 1][cTempCol - 1] === 1) {
+        setTimeout(() => {
+            turnIndicator.innerText = 'Comp HIT!'
+            tempSquareC.style.backgroundColor = 'red'
+            compHitLog.push(tempCheckSquare)
+            checkCompEaten()
+            checkCompWin()
+            setTimeout(playerTurn, 2000)
+        }, 3000);
+    } else {
+        setTimeout(() => {
+            turnIndicator.innerText = 'Comp Miss'
+            tempSquareC.style.backgroundColor = 'white'
+            checkCompEaten()
+            checkCompWin()
+            setTimeout(playerTurn, 2000)
+        }, 3000);
+    }
+
+}
+
+function playerTurn() {
+    turnIndicator.innerText = 'Player Turn'
+    for (let square of computerSquares) {
+        square.addEventListener("click", computerSquareChosen);
+    }
+}
+
+function flyTomatoP(e) {
+
     tempTom = document.createElement('div')
     tempTom.setAttribute('class', 'initial-state')
     tempTom.style.opacity = '0.0'
@@ -1015,8 +1069,38 @@ function flyTomato(e) {
     tHeight = window.innerHeight - landingY + offsetY
     root.style.setProperty('--landingX', tWidth + "px")
     root.style.setProperty('--landingY', tHeight + "px")
-    root.style.setProperty('--landingX2', tWidth / 2 + "px")
-    root.style.setProperty('--landingY2', tHeight / 2 + "px")
+    root.style.setProperty('--landingX2', window.innerWidth / 2 + "px")
+    root.style.setProperty('--landingY2', window.innerHeight / 2 + "px")
+    console.log(window.innerWidth), console.log(window.innerHeight)
+    console.log(root)
+}
+
+function flyTomatoC() {
+
+    tempTom = document.createElement('div')
+    tempTom.setAttribute('class', 'initial-state-c')
+    tempTom.style.opacity = '0.0'
+    tempTom.appendChild(tomatoImg)
+    mainGameArea.appendChild(tempTom)
+
+
+    tempInfoC = tempSquareC
+    tempInfoC = tempInfoC.getBoundingClientRect()
+    landingX = tempInfoC.x
+    landingY = tempInfoC.y
+    console.log(landingX)
+
+    console.log(tempInfo)
+        // tempTom.setAttribute('class', 't-ani')
+    root = document.documentElement;
+    offsetX = -90
+    offsetY = -100
+    tWidth = window.innerWidth - landingX + offsetX
+    tHeight = window.innerHeight - landingY + offsetY
+    root.style.setProperty('--landingX', tWidth + "px")
+    root.style.setProperty('--landingY', tHeight + "px")
+    root.style.setProperty('--landingX2', window.innerWidth / 2 + "px")
+    root.style.setProperty('--landingY2', window.innerHeight / 2 + "px")
     console.log(window.innerWidth), console.log(window.innerHeight)
     console.log(root)
 }
@@ -1328,34 +1412,7 @@ function checkForPhilly() {
     }
 }
 
-function computerTurnInit() {
-    turnIndicator.innerText = 'Comp Turn'
-        // setTimeout(computerTurn, 1000)
-    computerTurn()
-}
 
-function computerTurn() {
-    turnName = "Comp"
-    console.log('computer turn')
-    cTempRow = 1 + Math.floor(Math.random() * (numberOfRows - 1 + 1))
-    cTempCol = 1 + Math.floor(Math.random() * (numberOfColumns - 1 + 1))
-    console.log(cTempRow), console.log(cTempCol)
-    console.log(('p' + cTempRow + '-' + cTempCol))
-    tempSquare = document.getElementById('p' + cTempRow + '-' + cTempCol)
-    console.log(tempSquare)
-
-    if (playerArray[cTempRow - 1][cTempCol - 1] === 1) {
-        turnIndicator.innerText = 'Comp HIT!'
-        tempSquare.style.backgroundColor = 'red'
-        compHitLog.push(tempCheckSquare)
-    } else {
-        turnIndicator.innerText = 'Comp Miss'
-        tempSquare.style.backgroundColor = 'white'
-    }
-    checkCompEaten()
-    checkCompWin()
-    setTimeout(playerTurn, 2000)
-}
 
 // function computerSquareChosen(e) {
 //     console.log(e.target.id)
@@ -1377,12 +1434,7 @@ function computerTurn() {
 //     setTimeout(computerTurnInit, 2000)
 // }
 
-function playerTurn() {
-    turnIndicator.innerText = 'Player Turn'
-    for (let square of computerSquares) {
-        square.addEventListener("click", computerSquareChosen);
-    }
-}
+
 
 
 // const computerSquareChosen = e => {

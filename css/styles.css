@@ -194,7 +194,7 @@
         grid-row-end: 5;
     }
     
-    #tomato {
+    #tomatoP {
         /* position: absolute; */
         /* margin-right: 150px; */
         /* grid-column-start: 5;
@@ -218,8 +218,22 @@
         z-index: 2;
         visibility: visible;
         /* transition: all 1000; */
+        opacity: 0.0;
         animation-duration: 3s;
         animation-name: flyover;
+    }
+    
+    .initial-state-c {
+        position: absolute;
+        bottom: 25px;
+        right: 25px;
+        /* transform: translate(100%, 100%); */
+        z-index: 2;
+        visibility: visible;
+        opacity: 0.0;
+        /* transition: all 1000; */
+        animation-duration: 3s;
+        animation-name: flyoverC;
     }
     
      :root {
@@ -235,6 +249,41 @@
             position: absolute;
             bottom: 25px;
             right: 25px;
+            scale: 1;
+        }
+        50% {
+            opacity: 1;
+            poposition: absolute;
+            bottom: var(--landingY2);
+            right: var(--landingX2);
+            scale: 6;
+        }
+        80% {
+            opacity: 1;
+            position: absolute;
+            bottom: var(--landingY);
+            right: var(--landingX);
+            /* bottom: 625px;
+            right: 1025px; */
+            scale: 1;
+        }
+        to {
+            opacity: 1;
+            position: absolute;
+            bottom: var(--landingY);
+            right: var(--landingX);
+            /* bottom: 625px;
+            right: 1025px; */
+            scale: 1;
+        }
+    }
+    
+    @keyframes flyoverC {
+        from {
+            opacity: 0.0;
+            position: absolute;
+            bottom: 25px;
+            right: 1800px;
             scale: 1;
         }
         50% {
